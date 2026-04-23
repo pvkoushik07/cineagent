@@ -1,0 +1,29 @@
+{
+  "model": "claude-sonnet-4-5",
+  "allowedTools": [
+    "Edit",
+    "Write",
+    "Read",
+    "Bash(pip install:*)",
+    "Bash(pip list:*)",
+    "Bash(python:*)",
+    "Bash(pytest:*)",
+    "Bash(jupyter:*)",
+    "Bash(git add:*)",
+    "Bash(git commit:*)",
+    "Bash(git status:*)",
+    "Bash(git diff:*)",
+    "Bash(cat:*)",
+    "Bash(ls:*)",
+    "Bash(find:*)",
+    "Bash(mkdir:*)",
+    "Bash(cp:*)",
+    "Bash(mv:*)"
+  ],
+  "env": {
+    "PYTHONPATH": "./src"
+  },
+  "preferredNotifications": "minimal",
+  "autoCompact": true,
+  "compactThreshold": 0.7
+}
