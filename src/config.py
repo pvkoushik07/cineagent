@@ -23,6 +23,10 @@ RESULTS_DIR = DATA_DIR / "results"
 for d in [RAW_DIR, PROCESSED_DIR, INDICES_DIR, RESULTS_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
+# ── Personal film list ────────────────────────────────────────────────────────
+PERSONAL_FILMS_PATH = DATA_DIR / "personal_films.json"
+FAILED_FILMS_PATH = DATA_DIR / "failed_films.json"
+
 # ── API Keys ──────────────────────────────────────────────────────────────────
 TMDB_API_KEY: str = os.getenv("TMDB_API_KEY", "")
 GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
