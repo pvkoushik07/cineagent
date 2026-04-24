@@ -11,6 +11,7 @@ Usage:
 import json
 import logging
 import time
+from datetime import datetime
 from pathlib import Path
 
 import requests
@@ -26,6 +27,7 @@ from config import (
     FILMS_TARGET_COUNT,
     STILLS_PER_FILM,
     PERSONAL_FILMS_PATH,
+    FAILED_FILMS_PATH,
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -103,23 +105,29 @@ def fetch_film_metadata(film_id: int, max_retries: int = 2) -> dict:
             raise
 
 
-def fetch_popular_film_ids(pages: int = 25) -> list[int]:
+def fetch_popular_film_ids(target_count: int = 300) -> list[int]:
     """
-    Fetch a list of film IDs from TMDB discover endpoint.
+    Fetch a diverse list of film IDs from TMDB using 3 strategies.
 
-    Uses multiple sort strategies to get a diverse, not just popular, set.
-    Target: ~500 film IDs across different genres, years, languages.
+    Uses multiple sort strategies to get a diverse set for personalisation:
+    - Strategy 1: top_rated (150 films, quality baseline)
+    - Strategy 2: popular (100 films, cultural relevance)
+    - Strategy 3: discover with genre filters (50 films, fill gaps)
+
+    Target: ~300 film IDs across different genres, years, languages.
 
     Args:
-        pages: number of pages to fetch (20 films per page)
+        target_count: Target number of unique films (default 300)
 
     Returns:
         List of TMDB film IDs
     """
     film_ids: list[int] = []
 
-    # Strategy 1: top rated (quality films)
-    for page in range(1, pages + 1):
+    # Strategy 1: top_rated (quality baseline) — aim for 150 films
+    logger.info("Strategy 1: Fetching top_rated films...")
+    pages_needed = (150 // 20) + 1  # 20 films per page
+    for page in range(1, pages_needed + 1):
         url = f"{TMDB_BASE_URL}/movie/top_rated"
         params = {"api_key": TMDB_API_KEY, "page": page}
         resp = requests.get(url, params=params, timeout=10)
@@ -128,8 +136,46 @@ def fetch_popular_film_ids(pages: int = 25) -> list[int]:
         film_ids.extend([f["id"] for f in data.get("results", [])])
         time.sleep(0.25)  # TMDB rate limit: 40 req/10s
 
-    logger.info(f"Fetched {len(film_ids)} film IDs from TMDB")
-    return list(set(film_ids))[:FILMS_TARGET_COUNT]
+    logger.info(f"Strategy 1 added {len(film_ids)} films (target: 150)")
+
+    # Strategy 2: popular (cultural relevance) — aim for 100 films
+    logger.info("Strategy 2: Fetching popular films...")
+    pages_needed = (100 // 20) + 1
+    for page in range(1, pages_needed + 1):
+        url = f"{TMDB_BASE_URL}/movie/popular"
+        params = {"api_key": TMDB_API_KEY, "page": page}
+        resp = requests.get(url, params=params, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        film_ids.extend([f["id"] for f in data.get("results", [])])
+        time.sleep(0.25)
+
+    logger.info(f"Strategy 2 total: {len(film_ids)} films (target: 250 cumulative)")
+
+    # Strategy 3: discover with genre filters (fill gaps) — aim for 50 films
+    logger.info("Strategy 3: Fetching discover films with genre filters...")
+    genres = [28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878]  # Action, Adventure, Animation, Comedy, Crime, Documentary, Drama, Family, Fantasy, History, Horror, Music, Mystery, Romance, Sci-Fi
+    pages_per_genre = 1  # Fetch 1 page per genre
+    for genre_id in genres[:5]:  # Sample 5 genres to get ~50 films
+        url = f"{TMDB_BASE_URL}/discover/movie"
+        params = {
+            "api_key": TMDB_API_KEY,
+            "with_genres": genre_id,
+            "page": 1,
+            "sort_by": "vote_average.desc",
+        }
+        resp = requests.get(url, params=params, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        film_ids.extend([f["id"] for f in data.get("results", [])])
+        time.sleep(0.25)
+
+    logger.info(f"Strategy 3 total: {len(film_ids)} films (before dedup)")
+
+    # Deduplicate and limit to target
+    unique_ids = list(set(film_ids))
+    logger.info(f"Fetched {len(unique_ids)} unique film IDs from TMDB")
+    return unique_ids[:target_count]
 
 
 def download_image(url: str, save_path: Path) -> bool:
@@ -221,23 +267,57 @@ def fetch_and_save_film(film_id: int) -> dict | None:
 
 def run_pipeline() -> None:
     """
-    Main entry point. Fetches all films and saves to data/raw/.
+    Main entry point. Fetches all films (auto-discovered + personal) and saves to data/raw/.
+
+    Merges auto-discovered films (~300) with personal films (~200) for hybrid selection.
+    Tracks failures and saves to failed_films.json with timestamp.
     """
-    logger.info("Starting TMDB fetch pipeline...")
+    logger.info("Starting TMDB fetch pipeline (hybrid selection)...")
 
-    film_ids = fetch_popular_film_ids(pages=25)
-    logger.info(f"Target: {len(film_ids)} films")
+    # Fetch auto-discovered films
+    auto_ids = fetch_popular_film_ids(target_count=300)
+    logger.info(f"Auto-discovered: {len(auto_ids)} films")
 
+    # Load personal films
+    personal_ids = load_personal_films_ids()
+    logger.info(f"Personal films: {len(personal_ids)} films")
+
+    # Merge and deduplicate
+    all_ids = list(set(auto_ids + personal_ids))
+    logger.info(f"Total films (merged + deduplicated): {len(all_ids)} films")
+
+    # Track failures
+    failures: list[dict] = []
     success = 0
-    for i, film_id in enumerate(film_ids):
+
+    for i, film_id in enumerate(all_ids):
         result = fetch_and_save_film(film_id)
         if result:
             success += 1
+        else:
+            failures.append({
+                "film_id": film_id,
+                "timestamp": datetime.now().isoformat(),
+            })
+
         if i % 50 == 0:
-            logger.info(f"Progress: {i}/{len(film_ids)} films ({success} successful)")
+            logger.info(f"Progress: {i}/{len(all_ids)} films ({success} successful)")
         time.sleep(0.25)  # Respect TMDB rate limit
 
-    logger.info(f"Pipeline complete. {success}/{len(film_ids)} films fetched.")
+    # Save failures to failed_films.json
+    if failures:
+        with open(FAILED_FILMS_PATH, "w") as f:
+            json.dump(failures, f, indent=2)
+        logger.warning(f"Saved {len(failures)} failed films to {FAILED_FILMS_PATH}")
+
+    # Calculate and report success rate
+    total = len(all_ids)
+    success_rate = (success / total * 100) if total > 0 else 0
+    logger.info(f"Pipeline complete. {success}/{total} films fetched ({success_rate:.1f}% success)")
+
+    # Warn if success rate < 90%
+    if success_rate < 90:
+        logger.warning(f"Success rate {success_rate:.1f}% is below 90% threshold!")
 
 
 if __name__ == "__main__":
