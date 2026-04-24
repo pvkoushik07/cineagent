@@ -8,6 +8,8 @@ retriever — not the quality of results (that's the evaluation harness).
 Run with: pytest tests/test_retrievers.py -v
 """
 
+import json
+import tempfile
 import pytest
 from unittest.mock import MagicMock, patch
 from pathlib import Path
@@ -178,3 +180,35 @@ class TestMetrics:
         with LatencyTimer() as t:
             time.sleep(0.05)
         assert t.elapsed_ms >= 50, f"Expected >= 50ms, got {t.elapsed_ms:.1f}ms"
+
+
+# ── Personal Films Loader Tests ───────────────────────────────────────────────
+
+class TestPersonalFilmsLoader:
+
+    def test_load_personal_films_when_file_missing(self):
+        """Test loading returns empty list when personal_films.json doesn't exist."""
+        from pipeline.tmdb_fetcher import load_personal_films_ids
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fake_path = Path(tmpdir) / "missing.json"
+            film_ids = load_personal_films_ids(fake_path)
+            assert film_ids == []
+
+    def test_load_personal_films_extracts_ids(self):
+        """Test loading extracts film IDs from personal_films.json."""
+        from pipeline.tmdb_fetcher import load_personal_films_ids
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_file = Path(tmpdir) / "personal_films.json"
+            test_data = [
+                {"id": 2048, "title": "Mulholland Drive", "year": 2001, "category": "watchlist"},
+                {"id": 550, "title": "Fight Club", "year": 1999, "category": "director"},
+            ]
+            test_file.write_text(json.dumps(test_data))
+
+            film_ids = load_personal_films_ids(test_file)
+
+            assert len(film_ids) == 2
+            assert 2048 in film_ids
+            assert 550 in film_ids

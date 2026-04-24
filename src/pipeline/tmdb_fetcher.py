@@ -25,6 +25,7 @@ from config import (
     RAW_DIR,
     FILMS_TARGET_COUNT,
     STILLS_PER_FILM,
+    PERSONAL_FILMS_PATH,
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -32,6 +33,33 @@ logger = logging.getLogger(__name__)
 
 IMAGES_DIR = RAW_DIR / "images"
 IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load_personal_films_ids(file_path: Path = PERSONAL_FILMS_PATH) -> list[int]:
+    """
+    Load manually curated film IDs from personal_films.json.
+
+    Args:
+        file_path: Path to personal_films.json
+
+    Returns:
+        List of TMDB film IDs
+    """
+    if not file_path.exists():
+        logger.warning(f"{file_path} not found, using auto-discovery only")
+        return []
+
+    try:
+        with open(file_path) as f:
+            data = json.load(f)
+
+        film_ids = [film["id"] for film in data]
+        logger.info(f"Loaded {len(film_ids)} personal films from {file_path}")
+        return film_ids
+
+    except Exception as e:
+        logger.error(f"Failed to load {file_path}: {e}")
+        return []
 
 
 def fetch_film_metadata(film_id: int) -> dict:
