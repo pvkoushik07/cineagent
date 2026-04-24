@@ -172,3 +172,204 @@ def add_film(films: list[dict], film_info: dict, category: str) -> bool:
     films.append(film_entry)
     logger.info(f"Added: {film_info['title']} ({film_info['year']}) [{category}]")
     return True
+
+
+def display_films(films: list[dict], limit: int = 20) -> None:
+    """Display current film list."""
+    if not films:
+        print("No films in list yet.")
+        return
+
+    print(f"\n{'='*60}")
+    print(f"Current list: {len(films)} films")
+    print(f"{'='*60}")
+
+    # Group by category
+    by_category = {}
+    for film in films:
+        cat = film.get("category", "unknown")
+        by_category.setdefault(cat, []).append(film)
+
+    for category, cat_films in sorted(by_category.items()):
+        print(f"\n{category.upper()} ({len(cat_films)} films):")
+        for i, film in enumerate(cat_films[:limit], 1):
+            print(f"  {i}. {film['title']} ({film['year']})")
+
+        if len(cat_films) > limit:
+            print(f"  ... and {len(cat_films) - limit} more")
+
+
+def display_search_results(results: list[dict]) -> None:
+    """Display search results with numbered selection."""
+    if not results:
+        print("No results found.")
+        return
+
+    print(f"\nFound {len(results)} results:")
+    for i, film in enumerate(results, 1):
+        print(f"  {i}. {film['title']} ({film['year']})")
+
+
+def get_user_selection(results: list[dict], multi: bool = False) -> list[dict]:
+    """
+    Prompt user to select from search results.
+
+    Args:
+        results: List of search results
+        multi: Allow multiple selections (True) or single (False)
+
+    Returns:
+        List of selected film dicts
+    """
+    if not results:
+        return []
+
+    if multi:
+        prompt = f"Select [1-{len(results)}, comma-separated, or 'all']: "
+    else:
+        prompt = f"Select [1-{len(results)}]: "
+
+    try:
+        choice = input(prompt).strip().lower()
+
+        if multi and choice == "all":
+            return results
+
+        # Parse selection
+        if multi:
+            indices = [int(c.strip()) for c in choice.split(",")]
+        else:
+            indices = [int(choice)]
+
+        # Validate range
+        selected = []
+        for idx in indices:
+            if 1 <= idx <= len(results):
+                selected.append(results[idx - 1])
+            else:
+                print(f"Invalid selection: {idx}")
+
+        return selected
+
+    except (ValueError, KeyboardInterrupt):
+        print("\nCancelled.")
+        return []
+
+
+def get_category() -> str:
+    """Prompt user for category tag."""
+    categories = ["watchlist", "director", "genre", "want", "canonical"]
+
+    while True:
+        choice = input(f"Category? [{'/'.join(categories)}]: ").strip().lower()
+        if choice in categories:
+            return choice
+        print(f"Invalid category. Choose from: {', '.join(categories)}")
+
+
+def print_help() -> None:
+    """Print command help."""
+    print("""
+Commands:
+  s <title>   - Search by film title
+  d <name>    - Search by director name
+  l           - List current selections
+  r <number>  - Remove a film by list number
+  q           - Quit and save
+  h           - Show this help
+""")
+
+
+def run_interactive() -> None:
+    """Main interactive CLI loop."""
+    print("="*60)
+    print("CineAgent Film List Builder")
+    print("="*60)
+    print(f"Target: 200 personally curated films")
+    print_help()
+
+    films = load_personal_films()
+    print(f"\nLoaded {len(films)} existing films")
+
+    try:
+        while True:
+            print(f"\nCurrent: {len(films)}/200 films")
+            command = input("> ").strip()
+
+            if not command:
+                continue
+
+            parts = command.split(maxsplit=1)
+            cmd = parts[0].lower()
+            arg = parts[1] if len(parts) > 1 else ""
+
+            if cmd == "q":
+                save_personal_films(films)
+                print(f"✓ Saved {len(films)} films to {PERSONAL_FILMS_PATH}")
+                break
+
+            elif cmd == "h":
+                print_help()
+
+            elif cmd == "l":
+                display_films(films)
+
+            elif cmd == "s":
+                if not arg:
+                    print("Usage: s <title>")
+                    continue
+
+                results = search_films_by_title(arg)
+                display_search_results(results)
+
+                if results:
+                    selected = get_user_selection(results, multi=False)
+                    if selected:
+                        category = get_category()
+                        if add_film(films, selected[0], category):
+                            save_personal_films(films)  # Auto-save
+
+            elif cmd == "d":
+                if not arg:
+                    print("Usage: d <director name>")
+                    continue
+
+                results = search_films_by_director(arg)
+                display_search_results(results)
+
+                if results:
+                    selected = get_user_selection(results, multi=True)
+                    if selected:
+                        category = get_category()
+                        added = 0
+                        for film in selected:
+                            if add_film(films, film, category):
+                                added += 1
+                        if added > 0:
+                            save_personal_films(films)
+                            print(f"✓ Added {added} films")
+
+            elif cmd == "r":
+                if not arg.isdigit():
+                    print("Usage: r <number>")
+                    continue
+
+                idx = int(arg) - 1
+                if 0 <= idx < len(films):
+                    removed = films.pop(idx)
+                    save_personal_films(films)
+                    print(f"✓ Removed: {removed['title']}")
+                else:
+                    print(f"Invalid number. List has {len(films)} films.")
+
+            else:
+                print(f"Unknown command: {cmd}. Type 'h' for help.")
+
+    except KeyboardInterrupt:
+        print("\n\nSaving before exit...")
+        save_personal_films(films)
+        print(f"✓ Saved {len(films)} films")
+
+
+if __name__ == "__main__":
+    run_interactive()
