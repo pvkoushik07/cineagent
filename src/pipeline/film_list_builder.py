@@ -104,3 +104,71 @@ def search_films_by_director(director_name: str) -> list[dict]:
     except Exception as e:
         logger.error(f"Director search failed for '{director_name}': {e}")
         return []
+
+
+def load_personal_films(file_path: Path = PERSONAL_FILMS_PATH) -> list[dict]:
+    """
+    Load personal film list from JSON file.
+
+    Args:
+        file_path: Path to personal_films.json
+
+    Returns:
+        List of film dicts, or empty list if file doesn't exist
+    """
+    if not file_path.exists():
+        return []
+
+    try:
+        with open(file_path) as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Failed to load {file_path}: {e}")
+        return []
+
+
+def save_personal_films(films: list[dict], file_path: Path = PERSONAL_FILMS_PATH) -> None:
+    """
+    Save personal film list to JSON file.
+
+    Args:
+        films: List of film dicts
+        file_path: Path to save to
+    """
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(file_path, "w") as f:
+        json.dump(films, f, indent=2)
+
+    logger.info(f"Saved {len(films)} films to {file_path}")
+
+
+def add_film(films: list[dict], film_info: dict, category: str) -> bool:
+    """
+    Add a film to the list with category tag and timestamp.
+
+    Args:
+        films: Existing film list (modified in-place)
+        film_info: Dict with keys: id, title, year
+        category: Category tag (watchlist/director/genre/want/canonical)
+
+    Returns:
+        True if added, False if duplicate
+    """
+    # Check for duplicate
+    if any(f["id"] == film_info["id"] for f in films):
+        logger.warning(f"Film {film_info['title']} already in list")
+        return False
+
+    # Add film with metadata
+    film_entry = {
+        "id": film_info["id"],
+        "title": film_info["title"],
+        "year": film_info["year"],
+        "category": category,
+        "added_at": datetime.now().isoformat(),
+    }
+
+    films.append(film_entry)
+    logger.info(f"Added: {film_info['title']} ({film_info['year']}) [{category}]")
+    return True
