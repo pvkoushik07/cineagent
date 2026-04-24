@@ -207,12 +207,18 @@ Document these known failure modes during evaluation:
 
 ## Build Phases
 
-### Phase 1 — Data Pipeline (Week 1)
-- [ ] TMDB API setup + fetch 500 films
-- [ ] Download posters + 3 stills per film
-- [ ] Auto-caption all images with Gemini Flash
-- [ ] Build ChromaDB text_collection + image_collection
-- [ ] Notebook 01 complete
+### Phase 1 — Data Pipeline ✓ COMPLETE
+- [x] TMDB API setup + fetch 500 films
+- [x] Download posters + 3 stills per film
+- [x] Auto-caption all images with Gemini Flash
+- [x] Build ChromaDB text_collection + image_collection
+- [x] Interactive CLI for personal film list curation
+- [x] Hybrid selection strategy (personal + popular films)
+- [x] Retry logic with exponential backoff for TMDB API
+- [x] Failure tracking and recovery
+- [x] Master wrapper script (build_kb.py)
+- [x] Full test coverage for pipeline components
+- [x] Usage documentation (PHASE1_USAGE.md)
 
 ### Phase 2 — Retrieval Layer (Week 2)
 - [ ] text_retriever.py (MiniLM)
