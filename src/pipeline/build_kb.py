@@ -44,7 +44,7 @@ def run_phase(phase_name: str, module_path: str, function_name: str) -> bool:
 
     Args:
         phase_name: Human-readable phase name (e.g., "TMDB Fetcher")
-        module_path: Absolute import path (e.g., "src.pipeline.tmdb_fetcher")
+        module_path: Module import path (e.g., "pipeline.tmdb_fetcher")
         function_name: Function to call in the module (e.g., "run_pipeline")
 
     Returns:
@@ -158,7 +158,7 @@ def main() -> int:
     # ── Phase 1: TMDB Fetcher ─────────────────────────────────────────────────
     if not run_phase(
         "TMDB Fetcher",
-        "src.pipeline.tmdb_fetcher",
+        "pipeline.tmdb_fetcher",
         "run_pipeline",
     ):
         logger.error("Pipeline failed at Phase 1 (TMDB Fetcher)")
@@ -167,7 +167,7 @@ def main() -> int:
     # ── Phase 2: Caption Generator ────────────────────────────────────────────
     if not run_phase(
         "Caption Generator",
-        "src.pipeline.caption_generator",
+        "pipeline.caption_generator",
         "run_captioning",
     ):
         logger.error("Pipeline failed at Phase 2 (Caption Generator)")
@@ -176,7 +176,7 @@ def main() -> int:
     # ── Phase 3: KB Builder ───────────────────────────────────────────────────
     if not run_phase(
         "Knowledge Base Builder",
-        "src.pipeline.kb_builder",
+        "pipeline.kb_builder",
         "run_kb_builder",
     ):
         logger.error("Pipeline failed at Phase 3 (KB Builder)")
