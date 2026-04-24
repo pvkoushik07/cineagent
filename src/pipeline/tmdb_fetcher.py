@@ -62,25 +62,45 @@ def load_personal_films_ids(file_path: Path = PERSONAL_FILMS_PATH) -> list[int]:
         return []
 
 
-def fetch_film_metadata(film_id: int) -> dict:
+def fetch_film_metadata(film_id: int, max_retries: int = 2) -> dict:
     """
-    Fetch full metadata for a single film from TMDB.
+    Fetch full metadata for a single film from TMDB with retry logic.
 
     Args:
         film_id: TMDB integer film ID
+        max_retries: Maximum number of retry attempts
 
     Returns:
         Dict with title, overview, genres, director, cast, release_date, etc.
+
+    Raises:
+        requests.RequestException: If all retries fail
     """
-    url = f"{TMDB_BASE_URL}/movie/{film_id}"
-    params = {
-        "api_key": TMDB_API_KEY,
-        "append_to_response": "credits,images",
-        "include_image_language": "en,null",
-    }
-    resp = requests.get(url, params=params, timeout=10)
-    resp.raise_for_status()
-    return resp.json()
+    for attempt in range(max_retries + 1):
+        try:
+            url = f"{TMDB_BASE_URL}/movie/{film_id}"
+            params = {
+                "api_key": TMDB_API_KEY,
+                "append_to_response": "credits,images",
+                "include_image_language": "en,null",
+            }
+            resp = requests.get(url, params=params, timeout=10)
+            resp.raise_for_status()
+            return resp.json()
+
+        except requests.RequestException as e:
+            if attempt < max_retries:
+                wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s
+                logger.warning(
+                    f"Retry {attempt + 1}/{max_retries} for film {film_id} "
+                    f"after {wait_time}s (error: {e})"
+                )
+                time.sleep(wait_time)
+                continue
+
+            # Final attempt failed
+            logger.error(f"Failed to fetch film {film_id} after {max_retries} retries: {e}")
+            raise
 
 
 def fetch_popular_film_ids(pages: int = 25) -> list[int]:
