@@ -59,6 +59,27 @@ class CLIPRetriever:
         self.collection = self.client.get_collection(IMAGE_COLLECTION_NAME)
         logger.info(f"CLIPRetriever initialised. Collection size: {self.collection.count()}")
 
+    def retrieve(
+        self,
+        query: str,
+        image_types: list[str] | None = None,
+        metadata_filter: dict | None = None,
+    ) -> list[dict]:
+        """
+        Retrieve images matching a text query (convenience method).
+
+        Alias for retrieve_by_text(). Use this for standard text queries.
+
+        Args:
+            query: Natural language description of desired visual content
+            image_types: Optional filter for image type
+            metadata_filter: Optional metadata filters
+
+        Returns:
+            List of result dicts with image paths and similarity scores
+        """
+        return self.retrieve_by_text(query, image_types, metadata_filter)
+
     def retrieve_by_text(
         self,
         query: str,
