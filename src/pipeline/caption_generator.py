@@ -113,7 +113,7 @@ def run_captioning() -> None:
     """
     logger.info("Starting caption generation pipeline...")
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.5-flash")
     captions = load_existing_captions()
 
     images_dir = RAW_DIR / "images"
@@ -140,7 +140,7 @@ def run_captioning() -> None:
             save_captions(captions)
             logger.info(f"Progress: {i}/{len(all_images)} images captioned")
 
-        time.sleep(0.5)  # Gemini free tier: 15 requests/min
+        time.sleep(12)  # Gemini free tier: 5 requests/min
 
     save_captions(captions)
     logger.info(f"Captioning complete. {processed} new captions generated.")

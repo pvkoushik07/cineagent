@@ -25,6 +25,7 @@ for d in [RAW_DIR, PROCESSED_DIR, INDICES_DIR, RESULTS_DIR]:
 
 # ── Personal film list ────────────────────────────────────────────────────────
 PERSONAL_FILMS_PATH = DATA_DIR / "personal_films.json"
+AUTO_FILMS_PATH = DATA_DIR / "auto_films.json"
 FAILED_FILMS_PATH = DATA_DIR / "failed_films.json"
 
 # ── API Keys ──────────────────────────────────────────────────────────────────

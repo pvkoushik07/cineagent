@@ -27,6 +27,7 @@ from config import (
     FILMS_TARGET_COUNT,
     STILLS_PER_FILM,
     PERSONAL_FILMS_PATH,
+    AUTO_FILMS_PATH,
     FAILED_FILMS_PATH,
 )
 
@@ -116,12 +117,22 @@ def fetch_popular_film_ids(target_count: int = 300) -> list[int]:
 
     Target: ~300 film IDs across different genres, years, languages.
 
+    Caches results to auto_films.json to avoid re-fetching on subsequent runs.
+
     Args:
         target_count: Target number of unique films (default 300)
 
     Returns:
         List of TMDB film IDs
     """
+    # Check cache first
+    if AUTO_FILMS_PATH.exists():
+        logger.info(f"Loading cached auto-discovered film IDs from {AUTO_FILMS_PATH}")
+        with open(AUTO_FILMS_PATH) as f:
+            cached_ids = json.load(f)
+        logger.info(f"Loaded {len(cached_ids)} auto-discovered film IDs from cache")
+        return cached_ids[:target_count]
+
     film_ids: list[int] = []
 
     # Strategy 1: top_rated (quality baseline) — aim for 150 films
@@ -175,7 +186,14 @@ def fetch_popular_film_ids(target_count: int = 300) -> list[int]:
     # Deduplicate and limit to target
     unique_ids = list(set(film_ids))
     logger.info(f"Fetched {len(unique_ids)} unique film IDs from TMDB")
-    return unique_ids[:target_count]
+
+    # Cache for future runs
+    result = unique_ids[:target_count]
+    with open(AUTO_FILMS_PATH, "w") as f:
+        json.dump(result, f, indent=2)
+    logger.info(f"Cached {len(result)} auto-discovered film IDs to {AUTO_FILMS_PATH}")
+
+    return result
 
 
 def download_image(url: str, save_path: Path) -> bool:
