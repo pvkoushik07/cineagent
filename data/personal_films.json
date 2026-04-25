@@ -1480,5 +1480,390 @@
     "year": "2005",
     "category": "ground_truth",
     "added_at": "2026-04-25T20:04:03.993978"
+  },
+  {
+    "id": 1891,
+    "title": "The Empire Strikes Back",
+    "year": "1980",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:10.976731"
+  },
+  {
+    "id": 1892,
+    "title": "Return of the Jedi",
+    "year": "1983",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:12.079700"
+  },
+  {
+    "id": 140607,
+    "title": "Star Wars: The Force Awakens",
+    "year": "2015",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:13.048092"
+  },
+  {
+    "id": 181812,
+    "title": "Star Wars: The Rise of Skywalker",
+    "year": "2019",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:15.146518"
+  },
+  {
+    "id": 1724,
+    "title": "The Incredible Hulk",
+    "year": "2008",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:17.093297"
+  },
+  {
+    "id": 10195,
+    "title": "Thor",
+    "year": "2011",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:19.178852"
+  },
+  {
+    "id": 76338,
+    "title": "Thor: The Dark World",
+    "year": "2013",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:23.372606"
+  },
+  {
+    "id": 102899,
+    "title": "Ant-Man",
+    "year": "2015",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:27.573131"
+  },
+  {
+    "id": 284052,
+    "title": "Doctor Strange",
+    "year": "2016",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:29.664781"
+  },
+  {
+    "id": 284053,
+    "title": "Thor: Ragnarok",
+    "year": "2017",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:32.810246"
+  },
+  {
+    "id": 284054,
+    "title": "Black Panther",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:33.859981"
+  },
+  {
+    "id": 363088,
+    "title": "Ant-Man and the Wasp",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:35.955669"
+  },
+  {
+    "id": 497698,
+    "title": "Black Widow",
+    "year": "2021",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:40.151608"
+  },
+  {
+    "id": 524434,
+    "title": "Eternals",
+    "year": "2021",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:42.247251"
+  },
+  {
+    "id": 616037,
+    "title": "Thor: Love and Thunder",
+    "year": "2022",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:45.393545"
+  },
+  {
+    "id": 505642,
+    "title": "Black Panther: Wakanda Forever",
+    "year": "2022",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:46.443922"
+  },
+  {
+    "id": 640146,
+    "title": "Ant-Man and the Wasp: Quantumania",
+    "year": "2023",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:47.488264"
+  },
+  {
+    "id": 609681,
+    "title": "The Marvels",
+    "year": "2023",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:49.588886"
+  },
+  {
+    "id": 533535,
+    "title": "Deadpool & Wolverine",
+    "year": "2024",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:50.637739"
+  },
+  {
+    "id": 290815,
+    "title": "Court",
+    "year": "2015",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:51.692747"
+  },
+  {
+    "id": 752,
+    "title": "V for Vendetta",
+    "year": "2006",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:52.741512"
+  },
+  {
+    "id": 563604,
+    "title": "Dear Comrade",
+    "year": "2019",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:53.783441"
+  },
+  {
+    "id": 80798,
+    "title": "Annamayya",
+    "year": "1997",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:54.831520"
+  },
+  {
+    "id": 63434,
+    "title": "Sri Ramadasu",
+    "year": "2006",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:55.889771"
+  },
+  {
+    "id": 595228,
+    "title": "Soorarai Pottru",
+    "year": "2020",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:57.481649"
+  },
+  {
+    "id": 459713,
+    "title": "Mahanati",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:58.774464"
+  },
+  {
+    "id": 571610,
+    "title": "Majili",
+    "year": "2019",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:29:59.830192"
+  },
+  {
+    "id": 253533,
+    "title": "Manam",
+    "year": "2014",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:00.887693"
+  },
+  {
+    "id": 894803,
+    "title": "Sita Ramam",
+    "year": "2022",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:01.915126"
+  },
+  {
+    "id": 801688,
+    "title": "Kalki 2898-AD",
+    "year": "2024",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:02.991792"
+  },
+  {
+    "id": 532789,
+    "title": "Ee Nagaraniki Emaindi?",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:05.074901"
+  },
+  {
+    "id": 607313,
+    "title": "Sarileru Neekevvaru",
+    "year": "2020",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:06.420752"
+  },
+  {
+    "id": 678391,
+    "title": "HIT: The First Case",
+    "year": "2020",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:07.691200"
+  },
+  {
+    "id": 811945,
+    "title": "HIT: The 2nd Case",
+    "year": "2022",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:09.000838"
+  },
+  {
+    "id": 465099,
+    "title": "Ninnu Kori",
+    "year": "2017",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:10.042189"
+  },
+  {
+    "id": 765718,
+    "title": "Middle Class Melodies",
+    "year": "2020",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:11.120344"
+  },
+  {
+    "id": 610482,
+    "title": "Agent Sai Srinivasa Athreya",
+    "year": "2019",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:13.188809"
+  },
+  {
+    "id": 415193,
+    "title": "Imaikkaa Nodigal",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:14.235796"
+  },
+  {
+    "id": 442405,
+    "title": "The Ghazi Attack",
+    "year": "2017",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:15.287904"
+  },
+  {
+    "id": 262227,
+    "title": "Race Gurram",
+    "year": "2014",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:16.334345"
+  },
+  {
+    "id": 125835,
+    "title": "Julayi",
+    "year": "2012",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:17.383109"
+  },
+  {
+    "id": 9541,
+    "title": "Jersey Girl",
+    "year": "2004",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:18.430540"
+  },
+  {
+    "id": 82255,
+    "title": "Nuvvu Naaku Nachav",
+    "year": "2001",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:19.481226"
+  },
+  {
+    "id": 1068452,
+    "title": "Hi Nanna",
+    "year": "2023",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:20.529809"
+  },
+  {
+    "id": 31626,
+    "title": "Bommarillu",
+    "year": "2006",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:21.577053"
+  },
+  {
+    "id": 393841,
+    "title": "Pelli Choopulu",
+    "year": "2016",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:22.627605"
+  },
+  {
+    "id": 37172,
+    "title": "Athadu",
+    "year": "2005",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:23.990711"
+  },
+  {
+    "id": 1239511,
+    "title": "Lucky Baskhar",
+    "year": "2024",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:25.004680"
+  },
+  {
+    "id": 369925,
+    "title": "Oopiri",
+    "year": "2016",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:26.037936"
+  },
+  {
+    "id": 23381,
+    "title": "Pokiri",
+    "year": "2006",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:27.089755"
+  },
+  {
+    "id": 611754,
+    "title": "Brochevarevarura",
+    "year": "2019",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:28.144138"
+  },
+  {
+    "id": 897560,
+    "title": "Leader",
+    "year": "2018",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:29.093418"
+  },
+  {
+    "id": 664300,
+    "title": "Shiva Baby",
+    "year": "2021",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:30.240889"
+  },
+  {
+    "id": 280287,
+    "title": "Geethanjali",
+    "year": "1985",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:31.295273"
+  },
+  {
+    "id": 112846,
+    "title": "Tholi Prema",
+    "year": "1998",
+    "category": "bulk_add",
+    "added_at": "2026-04-25T20:30:32.238215"
   }
 ]
