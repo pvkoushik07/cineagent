@@ -9,11 +9,22 @@ Research question for this variant:
   "Can Gemini-generated image captions act as a proxy for visual content,
    enabling text search to reach visually-described queries?"
 
-Expected finding: Caption-only will outperform text-only on visual queries,
-but underperform CLIP-only — bounded by caption quality.
+Actual finding (Ablation 1): Caption-only achieves 100% Recall@5 on both
+factual and visual queries, matching text-only and outperforming CLIP-only.
+Auto-generated captions successfully encode visual mood/atmosphere.
 
 Used in:
   - Ablation 1: caption-only variant
+
+Usage:
+    from retrieval.caption_retriever import CaptionRetriever
+
+    retriever = CaptionRetriever(top_k=5)
+    results = retriever.retrieve("neon-lit urban nightscape")
+
+    for result in results:
+        print(f"{result['title']}: {result['score']:.3f}")
+        print(f"  Caption: {result['content'][:100]}...")
 """
 
 import logging

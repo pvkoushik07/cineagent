@@ -1,9 +1,9 @@
 """
-Hybrid Retriever — Ablation 1 Variant: hybrid RRF (Final System)
+Hybrid Retriever — Ablation 1 Variant: hybrid RRF
 
 Fuses results from text, caption, and CLIP retrievers using
-Reciprocal Rank Fusion (RRF). This is the expected top-performing
-retrieval variant.
+Reciprocal Rank Fusion (RRF). Originally hypothesized as the
+top-performing retrieval variant.
 
 RRF Formula:
   RRF_score(d) = Σ_i 1 / (k + rank_i(d))
@@ -12,7 +12,22 @@ RRF Formula:
 Films that rank well across multiple modalities get boosted.
 Films that only rank well in one list get partial credit.
 
+Actual finding (Ablation 1): Hybrid RRF achieves 60% Recall@5 on visual
+queries, underperforming text-only (100%) and caption-only (100%). RRF
+fusion degrades performance because CLIP's poor rankings (20% recall)
+pull down the fused scores. Text-based methods alone are superior.
+
 See ARCHITECTURE.md ADR-005 for design rationale.
+
+Usage:
+    from retrieval.hybrid_retriever import HybridRetriever
+
+    retriever = HybridRetriever(top_k=5, rrf_k=60)
+    results = retriever.retrieve("psychological thriller with twist ending")
+
+    for result in results:
+        print(f"{result['title']}: {result['score']:.3f}")
+        print(f"  Film ID: {result['film_id']}")
 """
 
 import logging

@@ -5,14 +5,28 @@ Searches the ChromaDB image collection using CLIP embeddings.
 Encodes the text query into CLIP's shared text-image embedding space,
 then retrieves visually similar posters and scene stills.
 
-This is the KEY modality for cross-modal visual queries.
-A query like "cold, rain-soaked, desaturated" retrieves posters and stills
-that are visually cold — something text search fundamentally cannot do.
+Originally hypothesized as the KEY modality for cross-modal visual queries.
+
+Actual finding (Ablation 1): CLIP-only achieves only 20% Recall@5 on visual
+queries, dramatically underperforming text-based methods (100%). CLIP's text
+encoder appears weaker than MiniLM for mapping abstract mood descriptions to
+visual content. Text embeddings + rich captions outperform true multimodal
+embeddings in this KB.
 
 Used in:
   - Ablation 1: CLIP-only variant
   - Variant B (fixed RAG): as the image component
   - Variant C (full agent): as the clip_search tool
+
+Usage:
+    from retrieval.clip_retriever import CLIPRetriever
+
+    retriever = CLIPRetriever(top_k=5)
+    results = retriever.retrieve("cold, desaturated, rain-soaked atmosphere")
+
+    for result in results:
+        print(f"{result['title']}: {result['score']:.3f}")
+        print(f"  Image: {result['content']}")
 """
 
 import logging

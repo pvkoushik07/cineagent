@@ -8,6 +8,16 @@ Used in:
   - Ablation 1: text-only vs caption-only vs CLIP-only vs hybrid
   - Variant B (fixed RAG): as the text component
   - Variant C (full agent): as one tool option for the RetrievalPlanner
+
+Usage:
+    from retrieval.text_retriever import TextRetriever
+
+    retriever = TextRetriever(top_k=5)
+    results = retriever.retrieve("Who directed Mulholland Drive?")
+
+    for result in results:
+        print(f"{result['title']}: {result['score']:.3f}")
+        print(f"  {result['content'][:100]}...")
 """
 
 import logging
