@@ -30,3 +30,6 @@ Thumbs.db
 
 # Claude Code
 .claude/
+data/raw/
+data/processed/
+data/indices/
