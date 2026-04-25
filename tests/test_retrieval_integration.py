@@ -1,6 +1,7 @@
 import pytest
 import sys
 from pathlib import Path
+import time
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
@@ -148,3 +149,45 @@ class TestHybridRetrieverIntegration:
         assert len(film_ids) == len(unique_film_ids), (
             f"Hybrid retriever returned duplicate films: {film_ids}"
         )
+
+
+class TestRetrieverPerformance:
+    """Performance tests for all retrievers."""
+    
+    def test_retriever_latency_under_2_seconds(self):
+        """Test: All retrievers complete queries in < 2 seconds."""
+        retrievers = {
+            "text": TextRetriever(top_k=5),
+            "caption": CaptionRetriever(top_k=5),
+            "clip": CLIPRetriever(top_k=5),
+            "hybrid": HybridRetriever(top_k=5),
+        }
+        
+        test_queries = [
+            "Who directed Mulholland Drive?",
+            "cold rainy atmosphere",
+            "neon-lit nightscape",
+        ]
+        
+        for retriever_name, retriever in retrievers.items():
+            latencies = []
+            
+            for query in test_queries:
+                start = time.perf_counter()
+                results = retriever.retrieve(query)
+                elapsed = time.perf_counter() - start
+                latencies.append(elapsed)
+                
+                assert len(results) > 0, (
+                    f"{retriever_name} returned no results for: {query}"
+                )
+            
+            mean_latency = sum(latencies) / len(latencies)
+            max_latency = max(latencies)
+            
+            assert max_latency < 2.0, (
+                f"{retriever_name} retriever too slow: "
+                f"max={max_latency:.3f}s, mean={mean_latency:.3f}s"
+            )
+            
+            print(f"{retriever_name}: mean={mean_latency:.3f}s, max={max_latency:.3f}s")
