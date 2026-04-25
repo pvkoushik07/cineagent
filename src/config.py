@@ -38,7 +38,7 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"
 TMDB_STILL_BASE_URL = "https://image.tmdb.org/t/p/w780"
 FILMS_TARGET_COUNT = 500
-STILLS_PER_FILM = 3
+STILLS_PER_FILM = 3  # Deprecated: now using dynamic filtering (up to 5 landscape stills)
 
 # ── Embedding Models ──────────────────────────────────────────────────────────
 TEXT_EMBEDDING_MODEL = "all-MiniLM-L6-v2"

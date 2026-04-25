@@ -93,8 +93,13 @@ def validate_kb() -> bool:
 
     try:
         import chromadb
+        from sentence_transformers import SentenceTransformer
 
         client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
+
+        # Load CLIP model for image collection queries
+        from config import IMAGE_EMBEDDING_MODEL
+        clip_model = SentenceTransformer(IMAGE_EMBEDDING_MODEL)
 
         # Check collections exist
         text_col = client.get_collection(TEXT_COLLECTION_NAME)
@@ -125,8 +130,10 @@ def validate_kb() -> bool:
 
         logger.info(f"  Text query found: {text_results['ids'][0][0]}")
 
-        # Image query (using any text in CLIP space)
-        image_results = image_col.query(query_texts=["visual style"], n_results=1)
+        # Image query (using CLIP text embeddings)
+        query_text = "visual style"
+        query_embedding = clip_model.encode([query_text]).tolist()
+        image_results = image_col.query(query_embeddings=query_embedding, n_results=1)
         if not image_results["ids"] or not image_results["ids"][0]:
             logger.error("Image collection query returned no results")
             return False

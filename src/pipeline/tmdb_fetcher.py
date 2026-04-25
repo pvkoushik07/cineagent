@@ -259,9 +259,20 @@ def fetch_and_save_film(film_id: int) -> dict | None:
         data["local_poster_path"] = str(poster_save)
 
     # Download stills (backdrops)
-    stills = data.get("images", {}).get("backdrops", [])[:STILLS_PER_FILM]
+    # Request 10 backdrops, filter for landscape (real stills vs promotional images)
+    all_backdrops = data.get("images", {}).get("backdrops", [])[:10]
+
+    # Filter: keep only landscape images (width > height × 1.3)
+    landscape_stills = [
+        bd for bd in all_backdrops
+        if bd.get("width", 0) > bd.get("height", 1) * 1.3
+    ]
+
+    # Take first 5 landscape stills
+    stills_to_download = landscape_stills[:5]
+
     data["local_still_paths"] = []
-    for i, still in enumerate(stills):
+    for i, still in enumerate(stills_to_download):
         still_url = f"{TMDB_STILL_BASE_URL}{still['file_path']}"
         still_save = IMAGES_DIR / f"{film_id}_still_{i}.jpg"
         if download_image(still_url, still_save):

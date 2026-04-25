@@ -140,7 +140,7 @@ def run_captioning() -> None:
             save_captions(captions)
             logger.info(f"Progress: {i}/{len(all_images)} images captioned")
 
-        time.sleep(12)  # Gemini free tier: 5 requests/min
+        time.sleep(0.1)  # Paid tier: 1000 requests/min (0.1s = safe buffer)
 
     save_captions(captions)
     logger.info(f"Captioning complete. {processed} new captions generated.")
