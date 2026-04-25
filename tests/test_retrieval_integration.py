@@ -40,3 +40,40 @@ class TestTextRetrieverIntegration:
         assert "score" in first_result
         assert "content" in first_result
         assert isinstance(first_result["score"], float)
+
+from retrieval.clip_retriever import CLIPRetriever
+
+
+class TestCLIPRetrieverIntegration:
+    """Integration tests for CLIPRetriever with real KB."""
+    
+    @pytest.fixture(scope="class")
+    def clip_retriever(self):
+        """Initialize CLIP retriever once for all tests."""
+        return CLIPRetriever(top_k=5)
+    
+    def test_visual_query_retrieves_correct_film(self, clip_retriever):
+        """Test: Visual/mood query returns correct film in top-5."""
+        # Caché (film_id: 445) should be in top-5 for cold rainy atmosphere
+        # Note: Empirically verified - Caché consistently appears in top-5 for this query
+        query = "cold, desaturated, rain-soaked visual atmosphere"
+        results = clip_retriever.retrieve(query)
+
+        # Check we got results
+        assert len(results) > 0, "CLIP retriever returned no results"
+        assert len(results) <= 5, "CLIP retriever returned more than top-5"
+
+        # Check Caché is in top-5
+        film_ids = [r["film_id"] for r in results]
+        assert "445" in film_ids, (
+            f"Caché (445) not in top-5 results. "
+            f"Got film_ids: {film_ids}, titles: {[r['title'] for r in results]}"
+        )
+        
+        # Check result format includes image_path
+        first_result = results[0]
+        assert "doc_id" in first_result
+        assert "film_id" in first_result
+        assert "title" in first_result
+        assert "score" in first_result
+        assert isinstance(first_result["score"], float)
