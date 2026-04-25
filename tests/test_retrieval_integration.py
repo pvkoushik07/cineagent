@@ -5,6 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from retrieval.text_retriever import TextRetriever
+from retrieval.caption_retriever import CaptionRetriever
 
 
 class TestTextRetrieverIntegration:
@@ -77,3 +78,37 @@ class TestCLIPRetrieverIntegration:
         assert "title" in first_result
         assert "score" in first_result
         assert isinstance(first_result["score"], float)
+
+class TestCaptionRetrieverIntegration:
+    """Integration tests for CaptionRetriever with real KB."""
+    
+    @pytest.fixture(scope="class")
+    def caption_retriever(self):
+        """Initialize caption retriever once for all tests."""
+        return CaptionRetriever(top_k=5)
+    
+    def test_visual_query_via_captions(self, caption_retriever):
+        """Test: Visual query retrieves films via auto-generated captions."""
+        # Should retrieve films with neon-lit nightscape imagery
+        query = "neon-lit urban nightscape, purple and green palette"
+        results = caption_retriever.retrieve(query)
+        
+        # Check we got results
+        assert len(results) > 0, "Caption retriever returned no results"
+        assert len(results) <= 5, "Caption retriever returned more than top-5"
+        
+        # Check result format and that we got caption docs
+        first_result = results[0]
+        assert "doc_id" in first_result
+        assert "film_id" in first_result
+        assert "title" in first_result
+        assert "score" in first_result
+        assert "content" in first_result
+        assert isinstance(first_result["score"], float)
+        
+        # Verify we got caption-type documents (not plot docs)
+        metadata = first_result.get("metadata", {})
+        doc_type = metadata.get("doc_type", "")
+        assert "caption" in doc_type, (
+            f"Expected caption document, got doc_type: {doc_type}"
+        )
