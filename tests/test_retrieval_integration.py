@@ -6,6 +6,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from retrieval.text_retriever import TextRetriever
 from retrieval.caption_retriever import CaptionRetriever
+from retrieval.hybrid_retriever import HybridRetriever
 
 
 class TestTextRetrieverIntegration:
@@ -111,4 +112,39 @@ class TestCaptionRetrieverIntegration:
         doc_type = metadata.get("doc_type", "")
         assert "caption" in doc_type, (
             f"Expected caption document, got doc_type: {doc_type}"
+        )
+
+
+class TestHybridRetrieverIntegration:
+    """Integration tests for HybridRetriever with real KB."""
+    
+    @pytest.fixture(scope="class")
+    def hybrid_retriever(self):
+        """Initialize hybrid retriever once for all tests."""
+        return HybridRetriever(top_k=5)
+    
+    def test_hybrid_combines_multiple_sources(self, hybrid_retriever):
+        """Test: Hybrid retriever fuses results from multiple modalities."""
+        # Query that benefits from both text and visual retrieval
+        query = "psychological thriller with twist ending"
+        results = hybrid_retriever.retrieve(query)
+        
+        # Check we got results
+        assert len(results) > 0, "Hybrid retriever returned no results"
+        assert len(results) <= 5, "Hybrid retriever returned more than top-5"
+        
+        # Check result format includes RRF score
+        first_result = results[0]
+        assert "doc_id" in first_result
+        assert "film_id" in first_result
+        assert "title" in first_result
+        assert "score" in first_result  # This should be RRF score
+        assert isinstance(first_result["score"], float)
+        
+        # Hybrid should return film-level results (deduplicated across sources)
+        # Check that film_ids are unique (no duplicate films in top-5)
+        film_ids = [r["film_id"] for r in results]
+        unique_film_ids = list(set(film_ids))
+        assert len(film_ids) == len(unique_film_ids), (
+            f"Hybrid retriever returned duplicate films: {film_ids}"
         )
