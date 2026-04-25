@@ -1,0 +1,42 @@
+import pytest
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from retrieval.text_retriever import TextRetriever
+
+
+class TestTextRetrieverIntegration:
+    """Integration tests for TextRetriever with real KB."""
+    
+    @pytest.fixture(scope="class")
+    def text_retriever(self):
+        """Initialize text retriever once for all tests."""
+        return TextRetriever(top_k=5)
+    
+    def test_factual_query_retrieves_correct_film(self, text_retriever):
+        """Test: Factual query returns correct film in top-5."""
+        # Mulholland Drive (film_id: 1018) should be in top-5 for director query
+        query = "Who directed Mulholland Drive?"
+        results = text_retriever.retrieve(query)
+        
+        # Check we got results
+        assert len(results) > 0, "Text retriever returned no results"
+        assert len(results) <= 5, "Text retriever returned more than top-5"
+        
+        # Check Mulholland Drive is in top-5
+        film_ids = [r["film_id"] for r in results]
+        assert "1018" in film_ids, (
+            f"Mulholland Drive (1018) not in top-5 results. "
+            f"Got film_ids: {film_ids}"
+        )
+        
+        # Check result format
+        first_result = results[0]
+        assert "doc_id" in first_result
+        assert "film_id" in first_result
+        assert "title" in first_result
+        assert "score" in first_result
+        assert "content" in first_result
+        assert isinstance(first_result["score"], float)
