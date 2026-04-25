@@ -41,6 +41,91 @@ _text_retriever: TextRetriever | None = None
 _clip_retriever: CLIPRetriever | None = None
 _hybrid_retriever: HybridRetriever | None = None
 
+def parse_json_safe(text: str) -> dict:
+    """
+    Parse JSON from LLM response, handling markdown code blocks.
+    
+    Args:
+        text: Raw LLM response text that may contain JSON
+        
+    Returns:
+        Parsed dict, or empty dict if parsing fails
+    """
+    try:
+        # Strip markdown code blocks if present
+        if "```" in text:
+            parts = text.split("```")
+            # Take the content between first pair of ```
+            if len(parts) >= 2:
+                text = parts[1]
+                # Remove 'json' language identifier if present
+                if text.strip().startswith("json"):
+                    text = text.strip()[4:]
+                text = text.strip()
+        
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse JSON from LLM response: {text[:200]}... Error: {e}")
+        return {}
+    
+def format_retrieved_docs(docs: list[dict], max_docs: int = 5) -> str:
+    """
+    Format retrieved documents for LLM prompts.
+    
+    Args:
+        docs: List of retrieved document dicts
+        max_docs: Maximum number of docs to include
+        
+    Returns:
+        Formatted string with doc content
+    """
+    if not docs:
+        return "No documents retrieved."
+    
+    formatted_lines = []
+    for i, doc in enumerate(docs[:max_docs], 1):
+        formatted_lines.append(f"[{i}] {doc.get('title', 'Unknown')} (Film ID: {doc.get('film_id', 'N/A')})")
+        formatted_lines.append(f"    Content: {doc.get('content', '')[:300]}...")
+        formatted_lines.append("")
+    
+    return "\n".join(formatted_lines)
+
+def format_taste_profile(profile: dict) -> str:
+    """
+    Format taste profile dict for LLM prompts.
+    
+    Args:
+        profile: TasteProfile dict
+        
+    Returns:
+        Human-readable formatted string
+    """
+    lines = []
+    if profile.get("preferred_genres"):
+        lines.append(f"Preferred genres: {', '.join(profile['preferred_genres'])}")
+    if profile.get("preferred_directors"):
+        lines.append(f"Preferred directors: {', '.join(profile['preferred_directors'])}")
+    if profile.get("preferred_languages"):
+        lines.append(f"Preferred languages: {', '.join(profile['preferred_languages'])}")
+    if profile.get("mood_keywords"):
+        lines.append(f"Mood preferences: {', '.join(profile['mood_keywords'])}")
+    if profile.get("avoid_genres"):
+        lines.append(f"Avoid: {', '.join(profile['avoid_genres'])}")
+    if profile.get("watched"):
+        lines.append(f"Already watched: {', '.join(profile['watched'][:5])}")
+        if len(profile["watched"]) > 5:
+            lines.append(f"  (and {len(profile['watched']) - 5} more)")
+    
+    year_range = profile.get("year_range", {})
+    if year_range.get("min") or year_range.get("max"):
+        min_year = year_range.get("min", "any")
+        max_year = year_range.get("max", "any")
+        lines.append(f"Year range: {min_year} - {max_year}")
+    
+    lines.append(f"Confidence: {profile.get('confidence', 0.0):.2f}")
+    
+    return "\n".join(lines) if lines else "No preferences recorded yet."
+
 
 def _get_retrievers() -> tuple[TextRetriever, CLIPRetriever, HybridRetriever]:
     """Lazy-load retrievers on first use."""
