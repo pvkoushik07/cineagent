@@ -584,9 +584,14 @@ def verify_rules(state: AgentState) -> tuple[bool, str | None]:
     Returns:
         Tuple of (verified, reason). If verified=False, reason explains why.
     """
+    response = state.get("response", "")
     cited_film_ids = state.get("cited_films", [])
     taste_profile = state.get("taste_profile", {})
     retrieved_docs = state.get("retrieved_docs", [])
+
+    # Check 0: Empty response?
+    if not response or not response.strip():
+        return False, "empty_response"
 
     # Build film metadata lookup
     film_metadata = {doc["film_id"]: doc for doc in retrieved_docs if "film_id" in doc}

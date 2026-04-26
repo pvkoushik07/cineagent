@@ -96,9 +96,9 @@ class TestQueryRouterNode:
         from agent.nodes import query_router_node
         result = query_router_node(base_state)
 
-        # Should default to hybrid rather than crash
+        # Should default to hybrid query type, but always text retrieval (Phase 2 finding)
         assert result["query_type"] == "hybrid"
-        assert result["retrieval_strategy"] == "hybrid"
+        assert result["retrieval_strategy"] == "text"
 
 
 # ── Node 3: TasteProfileUpdater ───────────────────────────────────────────────
@@ -174,16 +174,20 @@ class TestVerifierNode:
 
     def test_fails_if_watched_film_recommended(self, base_state):
         """Verifier must reject recommendations for films already watched."""
+        # Add a mock retrieved doc so the verifier can find the film title
+        base_state["retrieved_docs"] = [
+            {"film_id": "670", "title": "Oldboy", "content": "plot text", "modality": "text"}
+        ]
         base_state["response"] = "I recommend Oldboy, a great psychological thriller."
-        base_state["cited_films"] = ["Oldboy"]
-        base_state["taste_profile"]["watched"] = ["Oldboy"]
+        base_state["cited_films"] = ["670"]  # Film IDs, not titles
+        base_state["taste_profile"]["watched"] = ["Oldboy"]  # Watched list has title
         base_state["taste_profile"]["confidence"] = 0.8
 
         from agent.nodes import verifier_node
         result = verifier_node(base_state)
 
         assert result["verified"] is False
-        assert "recommended_watched" in result["verification_reason"]
+        assert "already watched" in result["verification_reason"]
 
     def test_increments_retry_count_on_failure(self, base_state):
         base_state["response"] = ""
