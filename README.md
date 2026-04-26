@@ -2,6 +2,12 @@
 ### A Personalised Multimodal Film Discovery Agent
 **INFS4205/7205 Assignment 3 — University of Queensland**
 
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue?style=flat-square&logo=python)
+![LangGraph](https://img.shields.io/badge/LangGraph-Agent%20Workflow-1c3c3c?style=flat-square)
+![ChromaDB](https://img.shields.io/badge/Vector%20DB-ChromaDB-7b61ff?style=flat-square)
+![Gemini](https://img.shields.io/badge/LLM-Gemini%20Flash-4285f4?style=flat-square&logo=google)
+![Multimodal RAG](https://img.shields.io/badge/Retrieval-Multimodal%20RAG-green?style=flat-square)
+
 ---
 
 ## Research Question
