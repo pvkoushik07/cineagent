@@ -244,7 +244,7 @@ def retrieval_planner_node(state: AgentState) -> dict:
         text_retriever, _, _ = _get_retrievers()
 
         # Retrieve documents
-        results = text_retriever.retrieve(query, top_k=TOP_K)
+        results = text_retriever.retrieve(query)
 
         if not results:
             logger.warning(f"No results found for query: {query}")
@@ -417,10 +417,16 @@ Return JSON with these fields (use empty lists if nothing to add):
   "preferred_languages": ["non-English"],
   "year_range": {{"min": null, "max": 2010}},
   "avoid_genres": ["romantic comedy"],
-  "watched": ["Oldboy", "Parasite"],
+  "watched": ["Film Title"],
   "mood_keywords": ["slow-burn", "psychological", "bleak"],
   "confidence": 0.8
 }}
+
+IMPORTANT for "watched" field:
+- ONLY add films the user EXPLICITLY said they have watched
+- Examples: "I've seen Oldboy", "I already watched Parasite", "I don't want films I've seen like Cache"
+- DO NOT add films they're just asking about or mentioning
+- Example of what NOT to add: "Who directed Parasite?" (just asking about it, not watched)
 
 Confidence rules:
 - 0.0-0.3: vague or no preferences mentioned
