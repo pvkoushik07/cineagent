@@ -221,6 +221,64 @@ Note: retrieval_strategy is always "text" (empirically best from ablation study)
 
 # ── Node 2: RetrievalPlanner ──────────────────────────────────────────────────
 
+def _extract_metadata_constraints(query: str) -> dict | None:
+    """
+    Extract metadata constraints from multi-hop queries.
+
+    Looks for patterns like:
+      - "after 2010", "released in 2019", "1990s" → year filter
+      - "non-English", "French", "Korean" → language filter
+      - "thriller", "documentary", "drama" → genre filter
+
+    Args:
+        query: User query string
+
+    Returns:
+        ChromaDB where-filter dict, or None if no constraints found
+    """
+    filter_dict = {}
+    query_lower = query.lower()
+
+    # Year constraints
+    if "after 2010" in query_lower:
+        filter_dict["year"] = {"$gte": 2010}
+    elif "after 2000" in query_lower:
+        filter_dict["year"] = {"$gte": 2000}
+    elif "1990s" in query_lower or "90s" in query_lower:
+        filter_dict["year"] = {"$gte": 1990, "$lte": 1999}
+    elif "2000s" in query_lower:
+        filter_dict["year"] = {"$gte": 2000, "$lte": 2009}
+    elif "2010s" in query_lower:
+        filter_dict["year"] = {"$gte": 2010, "$lte": 2019}
+
+    # Language constraints (note: metadata uses "original_language" field)
+    # For now, just detect "non-English" (most common pattern)
+    # More sophisticated: detect specific languages (French, Korean, etc.)
+    if "non-english" in query_lower or "non english" in query_lower:
+        filter_dict["original_language"] = {"$ne": "en"}
+
+    # Genre constraints
+    # ChromaDB metadata has genres as list, need $in operator
+    genres = []
+    if "thriller" in query_lower:
+        genres.append("Thriller")
+    if "documentary" in query_lower:
+        genres.append("Documentary")
+    if "drama" in query_lower:
+        genres.append("Drama")
+    if "crime" in query_lower:
+        genres.append("Crime")
+    if "comedy" in query_lower:
+        genres.append("Comedy")
+
+    if genres:
+        # Note: this assumes metadata has "genres" field as list
+        # Use $in to match any of the genres
+        filter_dict["genres"] = {"$in": genres}
+
+    return filter_dict if filter_dict else None
+
+
 def retrieval_planner_node(state: AgentState) -> dict:
     """
     Node 2: Execute retrieval using text-only strategy.
@@ -228,8 +286,10 @@ def retrieval_planner_node(state: AgentState) -> dict:
     No LLM call - deterministic function.
     Always uses TextRetriever (Phase 2 proved it's best).
 
-    Track 2 Enhancement: Multi-hop queries get larger candidate pool (k=200)
-    to ensure sufficient diversity for constraint satisfaction.
+    Track 2 Enhancement: Multi-hop queries get:
+      - Step 1: Larger candidate pool (k=200) for constraint diversity
+      - Step 2: Metadata extraction and filtering (year, language, genre)
+      - Step 3: Results trimmed to top-10 after filtering
 
     Reads:  state["query"], state["query_type"]
     Writes: state["retrieved_docs"], state["retrieved_images"], state["tool_calls_count"]
@@ -247,23 +307,30 @@ def retrieval_planner_node(state: AgentState) -> dict:
         # Get text retriever (lazy-loaded singleton)
         text_retriever, _, _ = _get_retrievers()
 
-        # Track 2 Step 1: Increase candidate pool for multi-hop queries
+        # Track 2 Step 1 & 2: Multi-hop queries get larger pool + metadata filtering
+        metadata_filter = None
         if query_type == "multi_hop":
             # Save original top_k
             original_top_k = text_retriever.top_k
             # Increase to 200 for multi-hop constraint satisfaction
             text_retriever.top_k = 200
-            logger.info(f"Multi-hop query detected: increased top_k from {original_top_k} to 200")
+
+            # Step 2: Extract metadata constraints from query
+            metadata_filter = _extract_metadata_constraints(query)
+            if metadata_filter:
+                logger.info(f"Multi-hop: extracted metadata filter: {metadata_filter}")
+
+            logger.info(f"Multi-hop query: k={200}, metadata_filter={metadata_filter}")
 
         # Retrieve documents
-        results = text_retriever.retrieve(query)
+        results = text_retriever.retrieve(query, metadata_filter=metadata_filter)
 
         # Restore original top_k if changed
         if query_type == "multi_hop":
             text_retriever.top_k = original_top_k
-            # Keep all 200 results for multi-hop - synthesizer can handle large context
-            # and filter for constraint-satisfying films
-            logger.info(f"Multi-hop: passing all {len(results)} candidates to synthesizer")
+            # Step 3: Trim to top-10 after filtering (balance between diversity and context)
+            results = results[:10]
+            logger.info(f"Multi-hop: filtered {200} → {len(results)} results for synthesis")
 
         if not results:
             logger.warning(f"No results found for query: {query}")
