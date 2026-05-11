@@ -54,9 +54,51 @@
 
 ## Track 2: Multi-Hop Enhancement
 
-**Target:** Fix 2/2 failing multi-hop queries (F3_01, F3_02)
+**Target:** Fix 2/2 failing multi-hop queries (F3_01, F3_02)  
+**Strategy:** Progressive parameter scaling + metadata filtering  
+**Baseline:** 33.3% (1/3 multi-hop correct: F3_03)
 
-[To be filled during Track 2]
+### Implementation (2026-05-11)
+
+**Step 1: Increased Candidate Pool**
+- Multi-hop queries now retrieve k=200 candidates (up from k=5)
+- Rationale: Multiple constraints require larger pool to find satisfying films
+- Change: `retrieval_planner_node` temporarily increases `text_retriever.top_k=200`
+
+**Step 2: Metadata Constraint Extraction**
+- Added `_extract_metadata_constraints()` function to parse query for filters
+- Detects year constraints: "after 2010" → `{year: {$gte: 2010}}`
+- Detects language constraints: "non-English" → `{original_language: {$ne: "en"}}`
+- Detects genre constraints: "thriller", "documentary", etc. → `{genres: {$in: [genres]}}`
+- Applies ChromaDB `where` filter before retrieval
+
+**Step 3: Result Trimming**
+- After metadata filtering, trim 200 results to top-10 for synthesis
+- Balance between candidate diversity and context efficiency
+- Filtered results more likely to satisfy all constraints
+
+### Expected Impact
+
+**F3_01**: "dark social commentary film, non-English language, released after 2010"
+- Should extract: `{year: {$gte: 2010}, original_language: {$ne: "en"}}`
+- Ground truth: Parasite (2019, Korean), Capernaum (2018, Arabic)
+- Prediction: PASS (both films match filters)
+
+**F3_02**: "true crime story, documentary-style realism, American setting"
+- Should extract: `{genres: {$in: ["Crime"]}}`
+- Ground truth: Zodiac, Spotlight
+- Prediction: UNCERTAIN (needs "crime" in query, might miss "true crime")
+
+**F3_03**: "visually stunning film with minimal dialogue and focus on nature"
+- No obvious metadata constraints to extract
+- May not benefit from Track 2 changes
+- Prediction: BASELINE (already passing)
+
+### Validation Status
+
+**Status:** IMPLEMENTED, AWAITING VALIDATION  
+**Validation Required:** Run full agent evaluation on MULTIHOP_TESTS  
+**Expected Multi-hop Recall:** 66.7% (2/3) if F3_01 and F3_03 pass
 
 ---
 
