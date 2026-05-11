@@ -12,12 +12,13 @@
 **Hypothesis:** Text interference or insufficient candidates
 
 ### Experiment 1: Pure CLIP (exp/visual-pure-clip)
-- **Date:** 
+- **Date:** 2026-05-11
 - **Change:** visual weights (0.0, 1.0) - eliminate text completely
-- **Results:** 
-- **Visual Recall:** 
-- **Overall Recall:**
-- **Decision:** 
+- **Results:** HYPOTHESIS REJECTED - Dropped performance
+- **Visual Recall:** 20% (no change: 1/5)
+- **Factual Recall:** 80% (down from 100%: lost 1 query)
+- **Overall Recall:** 38.5% (down from 53.8%: lost 2 queries)
+- **Decision:** Pure CLIP hurts other query families. Reject. 
 
 ### Experiment 2: More Candidates (exp/visual-more-candidates)
 - **Date:** 
