@@ -140,7 +140,7 @@ MULTIHOP_TESTS = [
         query_id="F3_01",
         query="dark social commentary film, non-English language, released after 2010",
         query_family="multi_hop",
-        ground_truth_film_ids=["496243", "553604"],  # Parasite, Capernaum
+        ground_truth_film_ids=["496243", "517814"],  # Parasite, Capernaum (FIXED: was 553604)
         ground_truth_titles=["Parasite", "Capernaum"],
         notes="3 constraints: tone + language + year — requires metadata + semantic",
     ),
@@ -148,7 +148,7 @@ MULTIHOP_TESTS = [
         query_id="F3_02",
         query="true crime story, documentary-style realism, American setting",
         query_family="multi_hop",
-        ground_truth_film_ids=["508439", "314365"],  # Minari... adjust to Zodiac/Spotlight
+        ground_truth_film_ids=["1949", "314365"],  # Zodiac, Spotlight (FIXED: was 508439, 314365)
         ground_truth_titles=["Zodiac", "Spotlight"],
         notes="Genre + style + setting — multi-hop constraint combination",
     ),
@@ -156,7 +156,7 @@ MULTIHOP_TESTS = [
         query_id="F3_03",
         query="visually stunning film with minimal dialogue and focus on nature",
         query_family="multi_hop",
-        ground_truth_film_ids=["45269", "3059"],  # Tree of Life, Days of Heaven
+        ground_truth_film_ids=["8967", "16642"],  # Tree of Life, Days of Heaven (FIXED: was 45269, 3059)
         ground_truth_titles=["The Tree of Life", "Days of Heaven"],
         notes="Visual quality + narrative style — needs CLIP + text",
     ),

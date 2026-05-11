@@ -223,17 +223,6 @@ Note: retrieval_strategy is always "text" (empirically best from ablation study)
 
 def _extract_metadata_constraints(query: str) -> dict | None:
     """
-    DISABLED: Metadata filtering rolled back due to KB data quality issues.
-    - original_language field is missing for all films
-    - Many films have incorrect years
-    - Filtering on broken metadata hurts performance (38.5% < 53.8% baseline)
-
-    Kept for reference. To re-enable, fix KB metadata first.
-    """
-    return None  # Disabled
-
-def _extract_metadata_constraints_DISABLED(query: str) -> dict | None:
-    """
     Extract metadata constraints from multi-hop queries.
 
     Looks for patterns like:
@@ -262,11 +251,11 @@ def _extract_metadata_constraints_DISABLED(query: str) -> dict | None:
     elif "2010s" in query_lower:
         filter_dict["year"] = {"$gte": 2010, "$lte": 2019}
 
-    # Language constraints (note: metadata uses "original_language" field)
+    # Language constraints (note: KB stores language in "language" field, not "original_language")
     # For now, just detect "non-English" (most common pattern)
     # More sophisticated: detect specific languages (French, Korean, etc.)
     if "non-english" in query_lower or "non english" in query_lower:
-        filter_dict["original_language"] = {"$ne": "en"}
+        filter_dict["language"] = {"$ne": "en"}  # FIXED: was "original_language"
 
     # Genre constraints - DISABLED
     # NOTE: Genres in ChromaDB are stored as comma-separated strings ("Comedy, Thriller, Drama")
@@ -293,6 +282,11 @@ def retrieval_planner_node(state: AgentState) -> dict:
     No LLM call - deterministic function.
     Always uses TextRetriever (Phase 2 proved it's best).
 
+    Track 2 Enhancement: Multi-hop queries get:
+      - Step 1: Larger candidate pool (k=200) for constraint diversity
+      - Step 2: Metadata extraction and filtering (year, language)
+      - Step 3: Results trimmed to top-10 after filtering
+
     Reads:  state["query"], state["query_type"]
     Writes: state["retrieved_docs"], state["retrieved_images"], state["tool_calls_count"]
 
@@ -303,13 +297,36 @@ def retrieval_planner_node(state: AgentState) -> dict:
         Partial state update dict
     """
     query = state["query"]
+    query_type = state.get("query_type", "hybrid")
 
     try:
         # Get text retriever (lazy-loaded singleton)
         text_retriever, _, _ = _get_retrievers()
 
-        # Retrieve documents (baseline: no metadata filtering)
-        results = text_retriever.retrieve(query)
+        # Track 2 Step 1 & 2: Multi-hop queries get larger pool + metadata filtering
+        metadata_filter = None
+        if query_type == "multi_hop":
+            # Save original top_k
+            original_top_k = text_retriever.top_k
+            # Increase to 200 for multi-hop constraint satisfaction
+            text_retriever.top_k = 200
+
+            # Step 2: Extract metadata constraints from query
+            metadata_filter = _extract_metadata_constraints(query)
+            if metadata_filter:
+                logger.info(f"Multi-hop: extracted metadata filter: {metadata_filter}")
+
+            logger.info(f"Multi-hop query: k={200}, metadata_filter={metadata_filter}")
+
+        # Retrieve documents
+        results = text_retriever.retrieve(query, metadata_filter=metadata_filter)
+
+        # Restore original top_k if changed
+        if query_type == "multi_hop":
+            text_retriever.top_k = original_top_k
+            # Step 3: Trim to top-10 after filtering (balance between diversity and context)
+            results = results[:10]
+            logger.info(f"Multi-hop: filtered {200} → {len(results)} results for synthesis")
 
         if not results:
             logger.warning(f"No results found for query: {query}")
