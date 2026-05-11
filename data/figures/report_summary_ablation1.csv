@@ -1,0 +1,5 @@
+Strategy,Mean_Recall,n_queries
+Caption Only,0.6,10
+Hybrid Rrf,0.6,10
+Text Only,0.6,10
+Clip Only,0.5,10
