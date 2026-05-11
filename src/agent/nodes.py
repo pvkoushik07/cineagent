@@ -178,22 +178,23 @@ def query_router_node(state: AgentState) -> dict:
 
 Classify the user query into exactly one of these types:
 
-1. **factual**: Asking for specific facts about a known film
-   - Examples: "Who directed Parasite?", "What year was Inception released?"
-   - Pattern: ONE film + ONE fact request
+1. **factual**: Asking for specific facts about ONE known film
+   - Examples: "Who directed Parasite?", "What year was Inception released?", "Who directed Mulholland Drive and what year was it released?"
+   - Pattern: ONE specific film + asking for fact(s) ABOUT that film
+   - Note: Multiple facts about one film is still factual, not multi_hop
 
 2. **visual**: Describing visual mood/aesthetic WITHOUT other constraints
    - Examples: "cold rainy atmosphere", "warm golden desert landscape"
    - Pattern: ONLY visual/mood descriptions, NO year/language/genre constraints
 
-3. **multi_hop**: Combining MULTIPLE distinct constraints that must ALL be satisfied
+3. **multi_hop**: FINDING films that match MULTIPLE search constraints
    - Examples:
      * "thriller from the 1990s in French" (genre + year + language)
      * "non-English film released after 2010 about social issues" (language + year + theme)
      * "documentary-style crime film set in America" (style + genre + setting)
-   - Pattern: Look for AND-connected requirements (explicit or implied)
-   - Keywords: "after/before [year]", "non-English", language names, "and", multiple genres
-   - IMPORTANT: If query has 2+ constraints from different categories (year, language, genre, style, setting), it's multi_hop
+   - Pattern: SEARCHING for films that satisfy 2+ filtering criteria
+   - Keywords: "after/before [year]", "non-English", language names, multiple genres
+   - IMPORTANT: Multi-hop is about SEARCHING with constraints, not asking facts about a known film
 
 4. **hybrid**: Needs both factual AND visual information (rare)
    - Example: "Films like Blade Runner that have neon lighting"
@@ -202,10 +203,9 @@ Classify the user query into exactly one of these types:
 Query: {query}
 
 CLASSIFICATION RULES:
-- Count distinct constraints: year/language/genre/style/setting/theme
-- If 2+ constraints → multi_hop
-- If ONLY visual mood → visual
-- If single factual question → factual
+- Is it asking facts ABOUT a specific named film? → factual (even if multiple facts)
+- Is it SEARCHING for films with 2+ different filters (year/language/genre/style)? → multi_hop
+- Is it ONLY describing visual mood? → visual
 - Default to hybrid only if truly needs both factual and visual
 
 Respond with JSON only:
@@ -290,6 +290,11 @@ def _extract_metadata_constraints(query: str) -> dict | None:
     #   1. Reprocessing KB to store genres as lists
     #   2. Using $contains operator (if supported by ChromaDB)
     #   3. Using text search on genre keywords instead of metadata filtering
+
+    # If multiple filters, wrap in $and operator (ChromaDB requires this)
+    if len(filter_dict) > 1:
+        conditions = [{k: v} for k, v in filter_dict.items()]
+        return {"$and": conditions}
 
     return filter_dict if filter_dict else None
 
