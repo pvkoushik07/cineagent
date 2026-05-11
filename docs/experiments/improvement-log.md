@@ -126,13 +126,29 @@
 
 ### Phase 2: Memory Logic Fixes (Conditional)
 
-**Status:** PENDING INVESTIGATION  
-**Next step:** Run conversational tests, identify memory bugs, fix if needed
+**Status:** ✅ NO FIXES NEEDED  
+**Reason:** Memory logic bugs already fixed in commit 2d97597 (2026-04-26)
 
-**Potential issues to check:**
-1. TasteProfileUpdater: Does it correctly parse and store exclusions ("already seen X")?
-2. Verifier: Does it catch responses that recommend excluded films?
-3. State persistence: Do preferences carry across turns?
+**Fixes already in baseline:**
+1. **TasteProfileUpdater (lines 511-515):** Only adds explicitly watched films
+   - ✓ Handles "I've seen X", "already watched Y", "don't want films I've seen like Z"
+   - ✓ Excludes mentions ("Who directed X?" → NOT added to watched)
+
+2. **Verifier verify_rules (lines 687-696):** Checks for watched films
+   - ✓ Checks both film_id and title against watched list
+   - ✓ Returns False with reason if watched film recommended
+
+3. **Verifier verify_rules (lines 698-709):** Checks for avoided genres
+   - ✓ Compares recommended film genres against avoid_genres list
+   - ✓ Returns False with reason if avoided genre recommended
+
+4. **Verifier verify_rules (line 679):** Checks for empty responses
+   - ✓ Catches empty/whitespace-only responses
+
+**Investigation Results:**
+- Code review shows all memory logic correctly implemented
+- TasteProfile merge function (lines 410-470) correctly deduplicates and combines preferences
+- Verifier has both rule-based (fast) and LLM-based (thorough) contradiction checks
 
 ### Validation Status
 
