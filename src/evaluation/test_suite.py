@@ -30,6 +30,9 @@ class ConversationalTestCase:
     expected_state_after: list[dict]  # Expected taste_profile keys after each turn
     final_answer_must_not_include: list[str] = field(default_factory=list)
     final_answer_must_satisfy: list[str] = field(default_factory=list)
+    # Track 3: Added ground truth for evaluation
+    ground_truth_film_ids: list[str] = field(default_factory=list)  # TMDB IDs
+    ground_truth_titles: list[str] = field(default_factory=list)     # Human-readable
 
 
 # ── Family 1: Factual Retrieval ───────────────────────────────────────────────
@@ -182,6 +185,9 @@ CONVERSATIONAL_TESTS = [
             "pre-2010",
             "thriller or psychological",
         ],
+        # Track 3: Added ground truth for evaluation
+        ground_truth_film_ids=["23383", "711"],  # The Secret in Their Eyes, Memories of Murder
+        ground_truth_titles=["The Secret in Their Eyes", "Memories of Murder"],
         # This is Ablation 2's key test: no-memory vs dynamic memory
     ),
     ConversationalTestCase(
@@ -198,6 +204,9 @@ CONVERSATIONAL_TESTS = [
         ],
         final_answer_must_not_include=[],
         final_answer_must_satisfy=["not sci-fi", "has twist", "cerebral"],
+        # Track 3: Added ground truth for evaluation
+        ground_truth_film_ids=["745", "629"],  # The Sixth Sense, The Usual Suspects
+        ground_truth_titles=["The Sixth Sense", "The Usual Suspects"],
         # Tests preference contradiction handling
     ),
 ]
