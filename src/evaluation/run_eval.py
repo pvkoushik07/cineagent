@@ -45,6 +45,7 @@ from retrieval.text_retriever import TextRetriever
 from retrieval.clip_retriever import CLIPRetriever
 from retrieval.caption_retriever import CaptionRetriever
 from retrieval.hybrid_retriever import HybridRetriever
+from retrieval.two_stage_retriever import TwoStageRetriever
 from agent.graph import run_turn
 from agent.state import initial_state
 
@@ -248,6 +249,50 @@ def run_retrieval_ablation(tests: list[TestCase]) -> list[dict]:
     return results
 
 
+# ── Experiments: Two-Stage Retriever Variants ──────────────────────────────────
+
+def run_two_stage_experiment(
+    variant_name: str,
+    tests: list[TestCase],
+) -> dict:
+    """
+    Run two-stage retrieval experiment on all test families.
+
+    Args:
+        variant_name: Name of experiment (e.g., "exp_visual-pure-clip")
+        tests: List of TestCase objects to evaluate
+
+    Returns:
+        Result dict with per_query and summary metrics
+    """
+    retriever = TwoStageRetriever()
+    results = []
+
+    for test in tests:
+        with LatencyTimer() as t:
+            raw_results = retriever.retrieve(test.query, query_type=test.query_family)
+
+        retrieved_film_ids = [r["film_id"] for r in raw_results]
+        retrieved_contexts = [r["content"] for r in raw_results if r.get("content")]
+
+        results.append({
+            "query_id": test.query_id,
+            "query_family": test.query_family,
+            "variant": variant_name,
+            "retrieved_film_ids": retrieved_film_ids,
+            "ground_truth_film_ids": test.ground_truth_film_ids,
+            "recall_at_5": recall_at_k(retrieved_film_ids, test.ground_truth_film_ids, k=5),
+            "latency_ms": t.elapsed_ms,
+            "tool_calls_count": 2,  # text retrieval + CLIP reranking
+            "faithfulness": -1,  # Not measured in retrieval experiments
+        })
+
+    return {
+        "per_query": results,
+        "summary": aggregate_metrics(results),
+    }
+
+
 # ── Main Entry Point ──────────────────────────────────────────────────────────
 
 def run_all_evaluations() -> dict:
@@ -306,9 +351,11 @@ if __name__ == "__main__":
     parser.add_argument("--all", action="store_true", help="Run all variants and ablations")
     parser.add_argument("--variant", choices=["A", "B", "C"], help="Run a single variant")
     parser.add_argument("--ablation", choices=["1", "2"], help="Run a single ablation")
+    parser.add_argument("--variant-exp", help="Run a two-stage experiment (e.g., exp_visual-pure-clip)")
+    parser.add_argument("--output", help="Output file for experiment results")
     args = parser.parse_args()
 
-    if args.all or (not args.variant and not args.ablation):
+    if args.all or (not args.variant and not args.ablation and not args.variant_exp):
         results = run_all_evaluations()
     elif args.variant == "A":
         tests = get_all_single_turn_tests()
@@ -328,3 +375,14 @@ if __name__ == "__main__":
         visual_factual = [t for t in tests if t.query_family in ("visual", "factual")]
         results = run_retrieval_ablation(visual_factual)
         print(json.dumps(aggregate_metrics(results), indent=2))
+    elif args.variant_exp:
+        tests = get_all_single_turn_tests()
+        exp_results = run_two_stage_experiment(args.variant_exp, tests)
+
+        # Save to file if specified
+        if args.output:
+            with open(args.output, "w") as f:
+                json.dump({args.variant_exp: exp_results}, f, indent=2)
+            logger.info(f"Experiment results saved to {args.output}")
+
+        print(json.dumps(exp_results["summary"], indent=2))
