@@ -20,12 +20,14 @@
 - **Decision:** 
 
 ### Experiment 2: More Candidates (exp/visual-more-candidates)
-- **Date:** 
+- **Date:** 2026-05-11
 - **Change:** candidate_k=100 for visual queries
-- **Results:** 
-- **Visual Recall:** 
-- **Overall Recall:**
-- **Decision:** 
+- **Results:** HYPOTHESIS REJECTED - No improvement with larger candidate pool
+- **Visual Recall:** 20% (no change: 1/5)
+- **Factual Recall:** 80% (no change: 4/5)
+- **Overall Recall:** 38.5% (no change from baseline)
+- **Multi-Hop Recall:** 0% (no change: 0/3)
+- **Decision:** Pure CLIP with k=100 doesn't improve visual ranking. CLIP weights are the limiting factor, not candidate pool size. Hypothesis rejected. 
 
 ### Experiment 3: Extreme CLIP (exp/visual-extreme-clip)
 - **Date:** 
