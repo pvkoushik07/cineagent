@@ -228,14 +228,26 @@ class TwoStageRetriever:
               - text_score, clip_score, fused_score
               - metadata
         """
-        # Stage 1: Get candidates via text retrieval
+        # EXPERIMENT 2: Adjust candidate pool size based on query type
+        if query_type == "visual":
+            # Visual queries need more candidates for CLIP to find matches
+            effective_k = 100
+        elif query_type == "multi_hop":
+            effective_k = self.candidate_k
+        else:
+            effective_k = self.candidate_k
+
+        # Stage 1: Get candidates via text retrieval with adjusted k
+        original_k = self.text_retriever.top_k
+        self.text_retriever.top_k = effective_k
         candidates = self.text_retriever.retrieve(query, metadata_filter=metadata_filter)
+        self.text_retriever.top_k = original_k  # Restore
 
         if not candidates:
             logger.warning(f"No candidates from text retrieval for: {query}")
             return []
 
-        logger.info(f"Stage 1: Retrieved {len(candidates)} text candidates")
+        logger.info(f"Stage 1: Retrieved {len(candidates)} text candidates (k={effective_k})")
 
         # Stage 2: Get CLIP scores FOR CANDIDATE FILMS ONLY
         # FIX: Instead of searching entire image collection, compute CLIP scores
