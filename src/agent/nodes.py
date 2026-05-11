@@ -228,7 +228,10 @@ def retrieval_planner_node(state: AgentState) -> dict:
     No LLM call - deterministic function.
     Always uses TextRetriever (Phase 2 proved it's best).
 
-    Reads:  state["query"]
+    Track 2 Enhancement: Multi-hop queries get larger candidate pool (k=200)
+    to ensure sufficient diversity for constraint satisfaction.
+
+    Reads:  state["query"], state["query_type"]
     Writes: state["retrieved_docs"], state["retrieved_images"], state["tool_calls_count"]
 
     Args:
@@ -238,13 +241,29 @@ def retrieval_planner_node(state: AgentState) -> dict:
         Partial state update dict
     """
     query = state["query"]
+    query_type = state.get("query_type", "hybrid")
 
     try:
         # Get text retriever (lazy-loaded singleton)
         text_retriever, _, _ = _get_retrievers()
 
+        # Track 2 Step 1: Increase candidate pool for multi-hop queries
+        if query_type == "multi_hop":
+            # Save original top_k
+            original_top_k = text_retriever.top_k
+            # Increase to 200 for multi-hop constraint satisfaction
+            text_retriever.top_k = 200
+            logger.info(f"Multi-hop query detected: increased top_k from {original_top_k} to 200")
+
         # Retrieve documents
         results = text_retriever.retrieve(query)
+
+        # Restore original top_k if changed
+        if query_type == "multi_hop":
+            text_retriever.top_k = original_top_k
+            # Keep all 200 results for multi-hop - synthesizer can handle large context
+            # and filter for constraint-satisfying films
+            logger.info(f"Multi-hop: passing all {len(results)} candidates to synthesizer")
 
         if not results:
             logger.warning(f"No results found for query: {query}")
