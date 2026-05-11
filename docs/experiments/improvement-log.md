@@ -28,12 +28,12 @@
 - **Decision:** 
 
 ### Experiment 3: Extreme CLIP (exp/visual-extreme-clip)
-- **Date:** 
+- **Date:** 2026-05-11
 - **Change:** visual weights (0.05, 0.95), candidate_k=50
-- **Results:** 
-- **Visual Recall:** 
-- **Overall Recall:**
-- **Decision:** 
+- **Results:** Same as baseline (20% visual, 38.5% overall)
+- **Visual Recall:** 20% (1/5 correct: F2_05)
+- **Overall Recall:** 38.5% (5/13 correct)
+- **Decision:** No improvement from Experiment 2. Extreme weights + moderate pool size achieved identical performance.
 
 ### Experiment 4: CLIP-Only Reranking (exp/visual-clip-only-rerank)
 - **Date:** 
