@@ -165,8 +165,8 @@ class TwoStageRetriever:
             clip_score = candidate.get("clip_score", 0.0)
 
             # Min-max normalization to [0, 1]
-            text_norm = (text_score - text_min) / text_range if text_range > 0 else 0.5
-            clip_norm = (clip_score - clip_min) / clip_range if clip_range > 0 else 0.5
+            text_norm = (text_score - text_min) / text_range if text_max > text_min else 0.5
+            clip_norm = (clip_score - clip_min) / clip_range if clip_max > clip_min else 0.5
 
             # Weighted fusion
             fused_score = alpha * text_norm + beta * clip_norm
