@@ -177,36 +177,12 @@ def query_router_node(state: AgentState) -> dict:
     prompt = f"""You are a query classifier for a film recommendation agent.
 
 Classify the user query into exactly one of these types:
-
-1. **factual**: Asking for specific facts about ONE known film
-   - Examples: "Who directed Parasite?", "What year was Inception released?", "Who directed Mulholland Drive and what year was it released?"
-   - Pattern: ONE specific film + asking for fact(s) ABOUT that film
-   - Note: Multiple facts about one film is still factual, not multi_hop
-
-2. **visual**: Describing visual mood/aesthetic WITHOUT other constraints
-   - Examples: "cold rainy atmosphere", "warm golden desert landscape"
-   - Pattern: ONLY visual/mood descriptions, NO year/language/genre constraints
-
-3. **multi_hop**: FINDING films that match MULTIPLE search constraints
-   - Examples:
-     * "thriller from the 1990s in French" (genre + year + language)
-     * "non-English film released after 2010 about social issues" (language + year + theme)
-     * "documentary-style crime film set in America" (style + genre + setting)
-   - Pattern: SEARCHING for films that satisfy 2+ filtering criteria
-   - Keywords: "after/before [year]", "non-English", language names, multiple genres
-   - IMPORTANT: Multi-hop is about SEARCHING with constraints, not asking facts about a known film
-
-4. **hybrid**: Needs both factual AND visual information (rare)
-   - Example: "Films like Blade Runner that have neon lighting"
-   - Pattern: Factual reference + visual description
+- factual: asking for specific facts (director, year, cast, plot details)
+- visual: describing visual mood, aesthetic, atmosphere, color palette
+- hybrid: needs both factual and visual information
+- multi_hop: requires combining multiple constraints
 
 Query: {query}
-
-CLASSIFICATION RULES:
-- Is it asking facts ABOUT a specific named film? → factual (even if multiple facts)
-- Is it SEARCHING for films with 2+ different filters (year/language/genre/style)? → multi_hop
-- Is it ONLY describing visual mood? → visual
-- Default to hybrid only if truly needs both factual and visual
 
 Respond with JSON only:
 {{"query_type": "<type>", "retrieval_strategy": "text", "reasoning": "<one sentence>"}}
