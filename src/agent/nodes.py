@@ -281,24 +281,15 @@ def _extract_metadata_constraints(query: str) -> dict | None:
     if "non-english" in query_lower or "non english" in query_lower:
         filter_dict["original_language"] = {"$ne": "en"}
 
-    # Genre constraints
-    # ChromaDB metadata has genres as list, need $in operator
-    genres = []
-    if "thriller" in query_lower:
-        genres.append("Thriller")
-    if "documentary" in query_lower:
-        genres.append("Documentary")
-    if "drama" in query_lower:
-        genres.append("Drama")
-    if "crime" in query_lower:
-        genres.append("Crime")
-    if "comedy" in query_lower:
-        genres.append("Comedy")
-
-    if genres:
-        # Note: this assumes metadata has "genres" field as list
-        # Use $in to match any of the genres
-        filter_dict["genres"] = {"$in": genres}
+    # Genre constraints - DISABLED
+    # NOTE: Genres in ChromaDB are stored as comma-separated strings ("Comedy, Thriller, Drama")
+    # not as lists, so $in operator doesn't work. Genre filtering disabled for now.
+    # The semantic text search should capture genre information anyway.
+    #
+    # TODO: If genre filtering is needed, would require either:
+    #   1. Reprocessing KB to store genres as lists
+    #   2. Using $contains operator (if supported by ChromaDB)
+    #   3. Using text search on genre keywords instead of metadata filtering
 
     return filter_dict if filter_dict else None
 
