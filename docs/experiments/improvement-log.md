@@ -36,12 +36,12 @@
 - **Decision:** No improvement from Experiment 2. Extreme weights + moderate pool size achieved identical performance.
 
 ### Experiment 4: CLIP-Only Reranking (exp/visual-clip-only-rerank)
-- **Date:** 
-- **Change:** Text for candidates, pure CLIP for ranking
-- **Results:** 
-- **Visual Recall:** 
-- **Overall Recall:**
-- **Decision:** 
+- **Date:** 2026-05-11
+- **Change:** Text for candidates (k=100), pure CLIP for ranking
+- **Results:** Visual 1/5 (20%), Factual 4/5 (80%), Multi-hop 0/3 (0%), Overall 5/13 (38.5%)
+- **Visual Recall:** 20%
+- **Overall Recall:** 38.5%
+- **Decision:** Rejected - no improvement from baseline 
 
 ### Winner:
 - **Experiment:** 
