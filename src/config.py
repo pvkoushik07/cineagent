@@ -50,7 +50,7 @@ TEXT_COLLECTION_NAME = "cineagent_text"
 IMAGE_COLLECTION_NAME = "cineagent_images"
 
 # ── LLM Settings ─────────────────────────────────────────────────────────────
-GEMINI_MODEL = "gemini-1.5-flash"
+GEMINI_MODEL = "gemini-2.5-flash"  # Updated to current available model
 OLLAMA_MODEL = "llava"
 MAX_OUTPUT_TOKENS = 1024
 TEMPERATURE = 0.3  # Lower = more grounded, less creative. Good for RAG.
