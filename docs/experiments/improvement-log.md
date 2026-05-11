@@ -44,10 +44,11 @@
 - **Decision:** 
 
 ### Winner:
-- **Experiment:** 
-- **Reason:** 
-- **Visual Recall:** 
-- **Overall Recall:** 
+- **Experiment:** NONE - Track 1 REJECTED
+- **Reason:** All 4 experiments achieved identical results (Visual 20%, Overall 38.5%) and DECREASED overall performance from baseline 53.8% to 38.5%. Pure CLIP approaches hurt factual (100%→80%) and multi-hop (33%→0%) queries without improving visual queries. Baseline configuration (query-adaptive fusion) is superior.
+- **Visual Recall:** 20% (1/5) - no improvement from baseline
+- **Overall Recall:** 38.5% (5/13) - DECREASED from baseline 53.8%
+- **Decision:** Keep baseline two-stage retriever configuration, proceed to Track 2 (multi-hop) with original weights 
 
 ---
 
