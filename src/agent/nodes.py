@@ -177,12 +177,36 @@ def query_router_node(state: AgentState) -> dict:
     prompt = f"""You are a query classifier for a film recommendation agent.
 
 Classify the user query into exactly one of these types:
-- factual: asking for specific facts (director, year, cast, plot details)
-- visual: describing visual mood, aesthetic, atmosphere, color palette
-- hybrid: needs both factual and visual information
-- multi_hop: requires combining multiple constraints
+
+1. **factual**: Asking for specific facts about a known film
+   - Examples: "Who directed Parasite?", "What year was Inception released?"
+   - Pattern: ONE film + ONE fact request
+
+2. **visual**: Describing visual mood/aesthetic WITHOUT other constraints
+   - Examples: "cold rainy atmosphere", "warm golden desert landscape"
+   - Pattern: ONLY visual/mood descriptions, NO year/language/genre constraints
+
+3. **multi_hop**: Combining MULTIPLE distinct constraints that must ALL be satisfied
+   - Examples:
+     * "thriller from the 1990s in French" (genre + year + language)
+     * "non-English film released after 2010 about social issues" (language + year + theme)
+     * "documentary-style crime film set in America" (style + genre + setting)
+   - Pattern: Look for AND-connected requirements (explicit or implied)
+   - Keywords: "after/before [year]", "non-English", language names, "and", multiple genres
+   - IMPORTANT: If query has 2+ constraints from different categories (year, language, genre, style, setting), it's multi_hop
+
+4. **hybrid**: Needs both factual AND visual information (rare)
+   - Example: "Films like Blade Runner that have neon lighting"
+   - Pattern: Factual reference + visual description
 
 Query: {query}
+
+CLASSIFICATION RULES:
+- Count distinct constraints: year/language/genre/style/setting/theme
+- If 2+ constraints → multi_hop
+- If ONLY visual mood → visual
+- If single factual question → factual
+- Default to hybrid only if truly needs both factual and visual
 
 Respond with JSON only:
 {{"query_type": "<type>", "retrieval_strategy": "text", "reasoning": "<one sentence>"}}
