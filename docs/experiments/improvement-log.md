@@ -104,6 +104,38 @@
 
 ## Track 3: Conversational Foundation
 
-**Target:** Get 1/2 conversational queries working after adding ground truth
+**Target:** Get 1/2 conversational queries working after adding ground truth  
+**Baseline:** 0/2 (no ground truth existed previously)
 
-[To be filled during Track 3]
+### Phase 1: Ground Truth Addition (2026-05-11)
+
+**Updated ConversationalTestCase class:**
+- Added `ground_truth_film_ids: list[str]` field
+- Added `ground_truth_titles: list[str]` field
+- Enables Recall@5 evaluation for conversational sequences
+
+**F4_01 Ground Truth:**
+- Query sequence: Slow-burn thriller → non-English, pre-2010 → NOT Oldboy/Cache
+- Ground truth: The Secret in Their Eyes (23383), Memories of Murder (711)
+- Both match ALL constraints: psychological thriller, non-English, pre-2010, not in exclusion list
+
+**F4_02 Ground Truth:**
+- Query sequence: Cerebral/mind-bending → NOT sci-fi, grounded → twist ending
+- Ground truth: The Sixth Sense (745), The Usual Suspects (629)
+- Both match ALL constraints: cerebral, realistic (not sci-fi), famous twist endings
+
+### Phase 2: Memory Logic Fixes (Conditional)
+
+**Status:** PENDING INVESTIGATION  
+**Next step:** Run conversational tests, identify memory bugs, fix if needed
+
+**Potential issues to check:**
+1. TasteProfileUpdater: Does it correctly parse and store exclusions ("already seen X")?
+2. Verifier: Does it catch responses that recommend excluded films?
+3. State persistence: Do preferences carry across turns?
+
+### Validation Status
+
+**Status:** AWAITING VALIDATION  
+**Expected:** 1-2/2 conversational queries correct (50-100%)  
+**Impact on overall:** +1-2 queries → 62-69% overall recall (9-10/15 total)
