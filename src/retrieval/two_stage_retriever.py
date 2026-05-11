@@ -228,10 +228,10 @@ class TwoStageRetriever:
               - text_score, clip_score, fused_score
               - metadata
         """
-        # EXPERIMENT 3: Balanced approach - moderate candidate pool
+        # EXPERIMENT 4: CLIP-only reranking - text for diverse candidates, pure CLIP for ranking
         if query_type == "visual":
-            # Balanced approach: moderate pool size + extreme CLIP weights
-            effective_k = 50
+            # Large candidate pool for diversity, then pure CLIP ranking
+            effective_k = 100
         elif query_type == "multi_hop":
             effective_k = self.candidate_k
         else:
@@ -256,14 +256,28 @@ class TwoStageRetriever:
 
         logger.info(f"Stage 2: Computed CLIP scores for {len(clip_scores)} candidate films")
 
-        # Get fusion weights
-        alpha, beta = self._get_weights(query_type)
+        # EXPERIMENT 4: For visual queries, use pure CLIP ranking (no fusion)
+        if query_type == "visual":
+            # Add CLIP scores to candidates
+            for candidate in candidates:
+                film_id = candidate.get("film_id")
+                candidate["clip_score"] = clip_scores.get(film_id, 0.0)
+                candidate["text_score"] = candidate.get("score", 0.0)
+                # Use CLIP score directly as fused score (no fusion with text)
+                candidate["fused_score"] = candidate["clip_score"]
 
-        # Normalize scores before fusion
-        candidates = self._normalize_and_fuse_scores(candidates, clip_scores, alpha, beta)
+            # Re-rank by pure CLIP score
+            candidates_sorted = sorted(candidates, key=lambda x: x["fused_score"], reverse=True)
+            logger.info(f"Visual query: ranked by pure CLIP scores (no text fusion)")
+        else:
+            # Get fusion weights for non-visual queries
+            alpha, beta = self._get_weights(query_type)
 
-        # Re-rank by fused score
-        candidates_sorted = sorted(candidates, key=lambda x: x["fused_score"], reverse=True)
+            # Normalize scores before fusion
+            candidates = self._normalize_and_fuse_scores(candidates, clip_scores, alpha, beta)
+
+            # Re-rank by fused score
+            candidates_sorted = sorted(candidates, key=lambda x: x["fused_score"], reverse=True)
 
         # Stage 3: Deduplicate by film_id - keep only first occurrence of each film
         seen_films = set()
