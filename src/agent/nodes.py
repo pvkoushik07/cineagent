@@ -300,33 +300,35 @@ def retrieval_planner_node(state: AgentState) -> dict:
     query_type = state.get("query_type", "hybrid")
 
     try:
-        # Get text retriever (lazy-loaded singleton)
-        text_retriever, _, _ = _get_retrievers()
+        # Get retrievers (lazy-loaded singletons)
+        text_retriever, _, hybrid_retriever = _get_retrievers()
 
         # Track 2 Step 1 & 2: Multi-hop queries get larger pool + metadata filtering
         metadata_filter = None
         if query_type == "multi_hop":
-            # Save original top_k
-            original_top_k = text_retriever.top_k
-            # Increase to 200 for multi-hop constraint satisfaction
-            text_retriever.top_k = 200
-
             # Step 2: Extract metadata constraints from query
             metadata_filter = _extract_metadata_constraints(query)
             if metadata_filter:
                 logger.info(f"Multi-hop: extracted metadata filter: {metadata_filter}")
 
-            logger.info(f"Multi-hop query: k={200}, metadata_filter={metadata_filter}")
+            # IMPROVED: Use hybrid retriever (dense + sparse BM25 + CLIP) for multi-hop
+            # This provides better keyword matching for thematic queries
+            logger.info(f"Multi-hop query: using hybrid retriever (dense+BM25) with metadata filter")
 
-        # Retrieve documents
-        results = text_retriever.retrieve(query, metadata_filter=metadata_filter)
+            # Retrieve with hybrid (includes BM25 keyword matching)
+            results = hybrid_retriever.retrieve(
+                query=query,
+                metadata_filter=metadata_filter,
+                use_clip=False,  # Text-focused for thematic queries
+                use_captions=False,
+            )
 
-        # Restore original top_k if changed
-        if query_type == "multi_hop":
-            text_retriever.top_k = original_top_k
-            # Step 3: Trim to top-10 after filtering (balance between diversity and context)
-            results = results[:10]
-            logger.info(f"Multi-hop: filtered {200} → {len(results)} results for synthesis")
+            # Keep top-50 after RRF fusion (preserve semantic + keyword ranking)
+            results = results[:50]
+            logger.info(f"Multi-hop: hybrid retrieval returned {len(results)} results")
+        else:
+            # Non-multi-hop: use text retriever as before
+            results = text_retriever.retrieve(query, metadata_filter=metadata_filter)
 
         if not results:
             logger.warning(f"No results found for query: {query}")

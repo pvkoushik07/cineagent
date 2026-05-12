@@ -12,6 +12,9 @@ langchain-community==0.2.16
 chromadb==0.5.3
 sentence-transformers==3.0.1
 
+# Retrieval (NEW: sparse + dense hybrid)
+rank-bm25==0.2.2
+
 # Image Processing (for CLIP)
 Pillow==10.4.0
 torch==2.3.1

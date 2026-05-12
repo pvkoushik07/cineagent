@@ -47,6 +47,49 @@ from config import (
 logger = logging.getLogger(__name__)
 
 
+# Visual query expansion mappings (abstract → concrete visual terms)
+VISUAL_QUERY_EXPANSIONS = {
+    "cold": "blue grey foggy rainy wet dark muted",
+    "warm": "golden orange yellow sunny bright",
+    "desaturated": "grey muted washed-out pale faded",
+    "saturated": "vibrant colorful bright vivid intense",
+    "vibrant": "colorful bright saturated vivid bold",
+    "neon": "bright pink blue purple glowing electric fluorescent",
+    "industrial": "metal concrete factory urban gritty steel",
+    "sterile": "white clean minimalist clinical bright empty",
+    "cyberpunk": "neon purple blue pink night city urban",
+    "noir": "black white shadows dark contrast dramatic",
+    "vintage": "sepia old retro aged faded nostalgic",
+    "crispy": "golden brown textured fried crunchy",
+    "creamy": "white smooth rich thick sauce",
+}
+
+
+def expand_visual_query(query: str) -> str:
+    """
+    Expand abstract visual terms to concrete visual descriptors.
+
+    This helps CLIP by converting semantic mood terms into literal visual
+    features that appear in images. For example:
+    - "cold atmosphere" → "cold blue grey foggy rainy wet dark muted"
+    - "warm colors" → "warm golden orange yellow sunny bright"
+
+    Args:
+        query: Original text query with potential abstract terms
+
+    Returns:
+        Expanded query with concrete visual descriptors added
+    """
+    expanded = query.lower()
+
+    for abstract, concrete in VISUAL_QUERY_EXPANSIONS.items():
+        if abstract in expanded:
+            expanded += f" {concrete}"
+            logger.debug(f"Expanded '{abstract}' → '{concrete}'")
+
+    return expanded
+
+
 class CLIPRetriever:
     """
     Retrieves film images from the image index using CLIP cross-modal embeddings.
@@ -112,8 +155,14 @@ class CLIPRetriever:
         Returns:
             List of result dicts with image paths and similarity scores
         """
+        # NEW: Expand abstract visual terms to concrete visual features
+        # This helps CLIP match semantic mood terms to literal visual appearance
+        expanded_query = expand_visual_query(query)
+        if expanded_query != query.lower():
+            logger.info(f"CLIP query expanded: '{query}' → '{expanded_query}'")
+
         # CLIP encodes text and images in the same space — encode query as text
-        query_embedding = self.model.encode(query).tolist()
+        query_embedding = self.model.encode(expanded_query).tolist()
 
         where = {}
         if image_types:

@@ -40,6 +40,7 @@ from config import TOP_K, RRF_K
 from retrieval.text_retriever import TextRetriever
 from retrieval.clip_retriever import CLIPRetriever
 from retrieval.caption_retriever import CaptionRetriever
+from retrieval.bm25_retriever import BM25Retriever
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,7 @@ class HybridRetriever:
 
     def __init__(self, top_k: int = TOP_K, rrf_k: int = RRF_K) -> None:
         """
-        Initialise all three sub-retrievers.
+        Initialise all four sub-retrievers (dense + sparse + CLIP + captions).
 
         Args:
             top_k: Final number of fused results to return
@@ -67,10 +68,11 @@ class HybridRetriever:
         """
         self.top_k = top_k
         self.rrf_k = rrf_k
-        self.text_retriever = TextRetriever(top_k=top_k * 2)     # fetch more for fusion
+        self.text_retriever = TextRetriever(top_k=top_k * 2)     # dense embeddings
+        self.bm25_retriever = BM25Retriever()                     # sparse keywords (NEW)
         self.clip_retriever = CLIPRetriever(top_k=top_k * 2)
         self.caption_retriever = CaptionRetriever(top_k=top_k * 2)
-        logger.info("HybridRetriever initialised with RRF fusion")
+        logger.info("HybridRetriever initialised with RRF fusion (dense + sparse + CLIP + captions)")
 
     def retrieve(
         self,
@@ -95,14 +97,22 @@ class HybridRetriever:
         all_result_lists: list[list[dict]] = []
         source_labels: list[str] = []
 
-        # Always include text retrieval
+        # Always include text retrieval (dense embeddings)
         text_results = self.text_retriever.retrieve(
             query=query,
             metadata_filter=metadata_filter,
             doc_types=["plot"],  # text-only: plots, not captions
         )
         all_result_lists.append(text_results)
-        source_labels.append("text")
+        source_labels.append("text_dense")
+
+        # BM25 sparse retrieval (NEW - keyword matching)
+        bm25_results = self.bm25_retriever.retrieve(
+            query=query,
+            k=self.top_k * 2,
+        )
+        all_result_lists.append(bm25_results)
+        source_labels.append("text_sparse")
 
         # CLIP image retrieval
         if use_clip:
