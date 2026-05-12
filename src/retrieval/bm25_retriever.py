@@ -59,13 +59,14 @@ class BM25Retriever:
 
         logger.info(f"BM25Retriever initialized with {len(self.documents)} documents")
 
-    def retrieve(self, query: str, k: int = 10) -> list[dict]:
+    def retrieve(self, query: str, k: int = 10, metadata_filter: dict | None = None) -> list[dict]:
         """
         Retrieve top-k documents using BM25 sparse scoring.
 
         Args:
             query: Search query string
             k: Number of results to return
+            metadata_filter: Optional ChromaDB-style metadata filter (applied post-retrieval)
 
         Returns:
             List of dicts with doc_id, film_id, content, metadata, score
@@ -76,26 +77,78 @@ class BM25Retriever:
         # Get BM25 scores for all documents
         scores = self.bm25.get_scores(tokenized_query)
 
-        # Get top-k indices by score (descending)
+        # Get top indices by score (need more for post-filtering)
+        retrieve_k = k * 10 if metadata_filter else k
         top_indices = sorted(
             range(len(scores)),
             key=lambda i: scores[i],
             reverse=True
-        )[:k]
+        )[:retrieve_k]
 
         # Build result list
         results = []
         for idx in top_indices:
-            results.append({
+            result = {
                 "doc_id": self.ids[idx],
                 "film_id": self.metadatas[idx].get("film_id", ""),
                 "content": self.documents[idx],
                 "metadata": self.metadatas[idx],
                 "score": float(scores[idx]),
-            })
+            }
+            results.append(result)
+
+        # Apply metadata filtering if provided
+        if metadata_filter:
+            results = self._apply_metadata_filter(results, metadata_filter)
+            logger.debug(f"BM25 filtered to {len(results)} results")
+
+        # Trim to requested k
+        results = results[:k]
 
         logger.debug(f"BM25 retrieved {len(results)} results for query: {query[:50]}...")
         return results
+
+    def _apply_metadata_filter(self, results: list[dict], filter_dict: dict) -> list[dict]:
+        """Apply ChromaDB-style metadata filter to results."""
+        # Handle $and operator
+        if "$and" in filter_dict:
+            conditions = filter_dict["$and"]
+            filtered = results
+            for condition in conditions:
+                filtered = self._apply_metadata_filter(filtered, condition)
+            return filtered
+
+        # Apply individual filters
+        filtered_results = []
+        for result in results:
+            metadata = result["metadata"]
+            matches = True
+
+            for key, value in filter_dict.items():
+                if key.startswith("$"):
+                    continue  # Skip operators
+
+                if isinstance(value, dict):
+                    # Handle operators like $gte, $ne, etc.
+                    metadata_value = metadata.get(key)
+                    for op, op_value in value.items():
+                        if op == "$gte" and not (metadata_value and metadata_value >= op_value):
+                            matches = False
+                        elif op == "$lte" and not (metadata_value and metadata_value <= op_value):
+                            matches = False
+                        elif op == "$ne" and metadata_value == op_value:
+                            matches = False
+                        elif op == "$in" and metadata_value not in op_value:
+                            matches = False
+                else:
+                    # Direct equality
+                    if metadata.get(key) != value:
+                        matches = False
+
+            if matches:
+                filtered_results.append(result)
+
+        return filtered_results
 
 
 if __name__ == "__main__":

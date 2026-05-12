@@ -203,9 +203,13 @@ Note: retrieval_strategy is always "text" (empirically best from ablation study)
 
         logger.info(f"QueryRouter: classified as '{query_type}' - {result.get('reasoning', '')}")
 
+        # UPDATED: Use hybrid (dense + sparse BM25) for multi-hop queries
+        # Text-only for others (Phase 2 finding confirmed)
+        retrieval_strategy = "hybrid" if query_type == "multi_hop" else "text"
+
         return {
             "query_type": query_type,
-            "retrieval_strategy": "text",  # Always text (Phase 2 finding)
+            "retrieval_strategy": retrieval_strategy,
             "tool_calls_count": state["tool_calls_count"] + 1
         }
 

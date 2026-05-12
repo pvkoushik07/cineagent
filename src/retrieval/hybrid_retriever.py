@@ -110,6 +110,7 @@ class HybridRetriever:
         bm25_results = self.bm25_retriever.retrieve(
             query=query,
             k=self.top_k * 2,
+            metadata_filter=metadata_filter,  # Apply same filter as dense
         )
         all_result_lists.append(bm25_results)
         source_labels.append("text_sparse")
