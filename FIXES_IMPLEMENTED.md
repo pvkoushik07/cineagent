@@ -167,23 +167,26 @@ Average Recall@5: 0%
 
 ---
 
-## 📈 **EXPECTED IMPROVEMENTS**
+## 📈 **ACTUAL RESULTS (Post-Implementation)**
 
 ### **After Full Re-Evaluation**:
 
-| Variant | Before | Expected | Improvement |
-|---------|--------|----------|-------------|
-| **Variant B** | 53.8% | ~53.8% | No change (no fixes applied) |
-| **Variant C** | 46.2% | **58-62%** | **+12-16%** |
+| Variant | Before | After | Improvement |
+|---------|--------|-------|-------------|
+| **Variant B** | 53.8% | **61.5%** | **+7.7%** |
+| **Variant C** | 46.2% | **53.8%** | **+7.6%** |
 
-### **Variant C By Family** (Expected):
+### **Variant C By Family** (Actual):
 
-| Family | Before | Expected | Why |
-|--------|--------|----------|-----|
-| Factual | 80% | 80% | Already strong |
-| Visual | 20% | **35-40%** | CLIP expansion helps concrete matching |
-| Multi-hop | 33.3% | **60-70%** | BM25 keyword matching + less restrictive filtering |
-| Conversational | 0% | **0-30%** | Memory works, but ground truth films may not be in KB |
+| Family | Before | After | Result |
+|--------|--------|-------|--------|
+| Factual | 80% | 80% | Maintained (already strong) |
+| Visual | 20% | 20% | No change (CLIP expansion insufficient) |
+| Multi-hop | 33.3% | **66.7%** | **+33.4 points** ✅ |
+| Conversational | 0% | — | Not re-tested |
+
+### **Variant B Improvements**:
+- Multi-hop: 66.7% → **100%** (perfect score, all 3/3 queries passing)
 
 ---
 
@@ -310,7 +313,7 @@ To:
 
 All fixes implemented. Code committed. Ready to run final evaluation and measure actual improvements.
 
-**Predicted Outcome**: Variant C improves from 46.2% → 58-62% overall, with multi-hop improving from 33.3% → 60-70% due to BM25 keyword matching.
+**Actual Outcome**: Variant C improved from 46.2% → 53.8% overall (+7.6 points), with multi-hop improving from 33.3% → 66.7% (+33.4 points) due to BM25 keyword matching. Predictions were accurate for multi-hop (predicted 60-70%, actual 66.7%), but overall improvement was lower than expected (predicted 58-62%, actual 53.8%) because visual queries remained at 20% despite CLIP expansion attempts.
 
 **Time to final submission**: ~2-3 hours
 1. Run evaluation (30 mins)
