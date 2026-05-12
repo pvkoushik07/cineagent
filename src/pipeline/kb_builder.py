@@ -83,9 +83,13 @@ def build_film_documents(raw_dir: Path, captions: dict) -> list[dict]:
             "cast_top3": ", ".join(cast),
         }
 
-        # 1. Plot text document
+        # 1. Plot text document (enriched with keywords)
         overview = film.get("overview", "")
+        keywords = film.get("keywords", [])
         if overview:
+            # Add keywords/themes to improve semantic search
+            keywords_text = f" Themes: {', '.join(keywords)}." if keywords else ""
+
             documents.append({
                 "doc_id": f"{film_id}_plot",
                 "film_id": film_id,
@@ -93,7 +97,7 @@ def build_film_documents(raw_dir: Path, captions: dict) -> list[dict]:
                 "modality": "text",
                 "doc_type": "plot",
                 "content": f"{title} ({year}). Directed by {', '.join(directors)}. "
-                           f"Cast: {', '.join(cast)}. Genres: {', '.join(genres)}. "
+                           f"Cast: {', '.join(cast)}. Genres: {', '.join(genres)}.{keywords_text} "
                            f"Plot: {overview}",
                 "metadata": {**base_metadata, "doc_type": "plot"},
             })
@@ -125,6 +129,21 @@ def build_film_documents(raw_dir: Path, captions: dict) -> list[dict]:
                     "content": f"Scene from '{title}': {captions[still_key]}",
                     "metadata": {**base_metadata, "doc_type": "still_caption",
                                  "image_key": still_key, "still_index": i},
+                })
+
+        # 4. Review documents (enriched content)
+        reviews = film.get("reviews", [])
+        for i, review in enumerate(reviews):
+            review_content = review.get("content", "")
+            if review_content:
+                documents.append({
+                    "doc_id": f"{film_id}_review_{i}",
+                    "film_id": film_id,
+                    "title": title,
+                    "modality": "text",
+                    "doc_type": "review",
+                    "content": f"Review of '{title}': {review_content}",
+                    "metadata": {**base_metadata, "doc_type": "review", "review_index": i},
                 })
 
     logger.info(f"Built {len(documents)} text/caption documents from {len(list(raw_dir.glob('*.json')))} films")
