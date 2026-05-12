@@ -186,17 +186,45 @@ Taste profile enables multi-turn refinement: Turn 1 establishes broad preference
 - **Result: 0% Recall@5** — Cannot retrieve correct documents without KB access (hallucinates film titles)
 
 **Variant B: Fixed RAG Pipeline**  
-- Hybrid retrieval (RRF fusion) applied to all queries uniformly
+- Hybrid retrieval (dense MiniLM + sparse BM25 + CLIP + captions via RRF fusion) applied to all queries uniformly
 - No query routing, no memory, simple prompt-based synthesis
-- **Result: 53.8% Recall@5** — Best overall performance
+- **Result: 61.5% Recall@5** — Best overall performance
 
 **Variant C: Full CineAgent (Proposed System)**  
-- All 5 nodes active: routing, memory, taste updating, verification
-- **Result: 46.2% Recall@5** — Underperforms fixed RAG by 7.6 percentage points
+- All 5 nodes active: routing, hybrid retrieval for multi-hop, memory, taste updating, verification
+- **Result: 53.8% Recall@5** — Underperforms fixed RAG by 7.7 percentage points
 
-**Key Finding:** The agentic architecture with query routing and metadata filtering *decreases* performance compared to a simple fixed RAG pipeline. This is an honest negative result: added complexity did not improve accuracy.
+**Key Finding:** The agentic architecture with query routing and metadata filtering *decreases* performance compared to a simple fixed RAG pipeline. This is an honest negative result: added complexity did not improve accuracy, though both variants benefited significantly from BM25 sparse retrieval integration.
 
-### 4.3 Ablation Studies
+### 4.3 Performance Improvements via BM25 Sparse Retrieval
+
+After initial evaluation revealed poor multi-hop performance (Variant C: 33.3%, Variant B: 66.7%), we investigated the root cause and implemented BM25 keyword-based retrieval to complement dense embeddings.
+
+**Problem Identified:**  
+MiniLM dense embeddings prioritize semantic similarity and narrative flow, but fail on exact keyword matches. Example: Query "dark social commentary" retrieved Parasite at position **#360** despite the plot containing the exact keywords "social commentary." Dense embeddings ranked films with similar narrative structures higher, even without thematic keyword matches.
+
+**Solution Implemented:**
+- **BM25Okapi algorithm** for sparse keyword matching
+- **Hybrid RRF fusion**: dense (MiniLM) + sparse (BM25) + CLIP + captions
+- Multi-hop queries now route to hybrid retriever with metadata filtering
+- Increased candidate pool from k=10 to k=50 to preserve semantic ranking
+
+**Results:**
+
+| Metric | Before BM25 | After BM25 | Improvement |
+|--------|-------------|------------|-------------|
+| Variant B Overall | 53.8% | **61.5%** | +7.7 points |
+| Variant B Multi-hop | 66.7% | **100%** | +33.3 points |
+| Variant C Overall | 46.2% | **53.8%** | +7.6 points |
+| Variant C Multi-hop | 33.3% | **66.7%** | +33.4 points |
+
+**Key Discovery:**  
+Parasite ranking for "dark social commentary": **#360 → #1** after BM25 fusion.
+
+**Insight:**  
+Dense embeddings alone are insufficient for thematic queries. Production RAG systems should always combine dense (semantic similarity) + sparse (keyword matching) retrieval. BM25 provides exact keyword matches while dense embeddings handle paraphrasing and semantic nuance — both are essential.
+
+### 4.4 Ablation Studies
 
 **Ablation 1: Retrieval Design**  
 Compared 4 retrieval strategies on full test suite:
@@ -224,29 +252,33 @@ Tested 4 CLIP-focused variants to improve visual query performance:
 
 **Conclusion:** CLIP limitations are fundamental — abstract mood queries require semantic understanding, not pixel-level visual matching.
 
-### 4.4 Performance Breakdown
+### 4.5 Performance Breakdown
 
 **Comparative Results Across All Variants:**
 
 | Variant | Overall | Factual | Visual | Multi-Hop | Mean Latency |
 |---------|---------|---------|--------|-----------|--------------|
 | **A (Plain LLM)** | **0%** | 0% | 0% | 0% | 10.6s |
-| **B (Fixed RAG)** | **53.8%** ✅ | 80% | 20% | **66.7%** | 6.5s |
-| **C (Full Agent)** | **46.2%** | 80% | 20% | 33.3% | 11.6s |
+| **B (Fixed RAG)** | **61.5%** ✅ | 80% | 20% | **100%** | 5.9s |
+| **C (Full Agent)** | **53.8%** | 80% | 20% | 66.7% | 11.6s |
 
 *Figure 1 (see appendix) visualizes variant comparison; Figure 2 shows performance by query family.*
 
 **Critical Insight: Variant B Outperforms Variant C**
 
-Fixed RAG achieved 53.8% overall vs. Full Agent's 46.2%. The performance gap is most pronounced in multi-hop queries:
-- Fixed RAG: 66.7% (2/3 queries passing)
-- Full Agent: 33.3% (1/3 queries passing)
+Fixed RAG achieved 61.5% overall vs. Full Agent's 53.8% (gap of 7.7 percentage points). The performance gap is most pronounced in multi-hop queries:
+- Fixed RAG: **100%** (3/3 queries passing) ✅
+- Full Agent: 66.7% (2/3 queries passing)
 
-**Root Cause:** The QueryRouter in Variant C applies restrictive metadata filtering (k=200 candidates → filter by year/language → trim to top-10) which over-constrains semantic search. Parasite ranks #360 in the full semantic ranking for "dark social commentary" but gets correctly retrieved by Fixed RAG's broader k=5 approach.
+**Root Cause & Solution:** Initially, Variant C achieved only 46.2% overall and 33.3% multi-hop due to overly restrictive metadata filtering (k=10 candidates). After implementing **BM25 sparse retrieval** (keyword-based matching) + hybrid fusion with dense embeddings, performance improved significantly:
+- Variant C: 46.2% → 53.8% overall (+7.6 points)
+- Variant C multi-hop: 33.3% → 66.7% (+33.4 points)
+
+**Key Discovery:** Parasite ranked #360 for "dark social commentary" with dense embeddings alone (MiniLM prioritizes narrative flow over keywords), but ranks **#1 with BM25 fusion** (exact keyword "social commentary" match). Both variants improved after BM25 integration, but Fixed RAG's simpler architecture achieves perfect multi-hop performance.
 
 **Efficiency Metrics:**
-- Fixed RAG is **44% faster** (6.5s vs 11.6s) — routing overhead adds 5 seconds per query
-- Both variants use 2.0 tool calls per query on average
+- Fixed RAG is **97% faster** (5.9s vs 11.6s) — routing overhead adds 5.7 seconds per query
+- Both variants use 2.0 tool calls per query on average (retrieval + synthesis)
 
 **Key Observations:**
 - **Factual queries excel** (80% for both RAG variants) because MiniLM embeddings match director/cast names exactly
@@ -297,14 +329,20 @@ Fixed RAG achieved 53.8% overall vs. Full Agent's 46.2%. The performance gap is 
 ### 5.3 System Trade-Offs
 
 **Complexity vs. Performance:**  
-The full 5-node agent achieved 46.2% while the simpler fixed RAG pipeline achieved **53.8%** — an honest negative result. The added complexity (5 nodes, tool orchestration, query classification, metadata filtering, verification loops) not only introduces 79% higher latency (11.6s vs 6.5s) but *decreases* accuracy by 7.6 percentage points. This demonstrates that **architectural sophistication does not guarantee performance gains**.
+The full 5-node agent achieved 53.8% while the simpler fixed RAG pipeline achieved **61.5%** — an honest negative result. The added complexity (5 nodes, tool orchestration, query classification, metadata filtering, verification loops) not only introduces 97% higher latency (11.6s vs 5.9s) but *decreases* accuracy by 7.7 percentage points. This demonstrates that **architectural sophistication does not guarantee performance gains**.
 
-**Why the Agent Underperformed:**
-1. **Query router misclassification:** Multi-hop queries trigger overly restrictive metadata filtering (k=200 → filter → k=10) which discards semantically relevant results that rank below position 10
-2. **Metadata filtering brittleness:** Filtering on year/language works when ground truth matches constraints exactly, but fails when semantic ranking places correct results outside the top-10 after filtering
-3. **Routing overhead:** 5-second latency penalty from LLM-based classification provides no accuracy benefit
+**Why the Agent Underperformed (Initially):**
+1. **Query router misclassification:** Multi-hop queries initially triggered overly restrictive metadata filtering (k=10) which discarded semantically relevant results
+2. **Dense-only retrieval limitation:** MiniLM embeddings prioritize narrative flow over keyword matching, causing thematic queries to fail (e.g., Parasite ranked #360 for "dark social commentary")
+3. **Routing overhead:** 5.7-second latency penalty from LLM-based classification provides no accuracy benefit
 
-**For production deployment:** A fixed RAG pipeline (Variant B) is superior — simpler, faster, and more accurate. The agent architecture (Variant C) was a worthwhile research exploration that revealed the limitations of adaptive retrieval strategies.
+**Performance Improvements via BM25:**  
+After implementing BM25 sparse retrieval (keyword matching) + hybrid RRF fusion with dense embeddings:
+- Variant C improved from 46.2% → 53.8% (+7.6 points)
+- Multi-hop improved from 33.3% → 66.7%
+- Parasite now ranks #1 (was #360) for "dark social commentary"
+
+**For production deployment:** A fixed RAG pipeline (Variant B) remains superior — simpler, faster (5.9s vs 11.6s), and more accurate (61.5% vs 53.8%). The agent architecture (Variant C) was a worthwhile research exploration that revealed the limitations of adaptive retrieval strategies, though BM25 integration substantially narrowed the performance gap.
 
 **Multimodal Fusion:**  
 Ablations show text-only retrieval matches hybrid RRF performance on most queries. The multimodal architecture demonstrates technical capability but provides no measurable accuracy gain with current embedding models. Future work should explore multimodal embeddings (e.g., ImageBind, BLIP-2) that encode visual and semantic signals jointly.
@@ -318,16 +356,19 @@ Dynamic taste profiling's value is under-evaluated due to limited conversational
 
 2. **Data quality is critical:** TMDB plots are too brief for thematic search. A production system would need enriched plot summaries (e.g., from Wikipedia, critical essays) or human-annotated thematic tags.
 
-3. **Agentic workflows can decrease performance:** Query routing and verification loops add sophistication but provided negative value in this evaluation. Fixed RAG achieved 53.8% while the full agent achieved 46.2%. The routing logic's metadata filtering was too restrictive, discarding semantically relevant results. A simpler RAG pipeline is both faster and more accurate for single-turn queries. The agent's potential value lies in multi-turn memory, which remains under-tested.
+3. **Agentic workflows can decrease performance:** Query routing and verification loops add sophistication but provided limited value in this evaluation. Fixed RAG achieved 61.5% while the full agent achieved 53.8%. Even after BM25 improvements (agent improved from 46.2% → 53.8%), the gap persists. The routing logic's complexity introduces latency without compensating accuracy gains. A simpler RAG pipeline is both faster and more accurate for single-turn queries. The agent's potential value lies in multi-turn memory, which remains under-tested.
 
-4. **Evaluation exposed assumptions:** Initial test suite had 5/6 wrong ground truth IDs — only caught during deep investigation. Comprehensive testing (unit tests + integration tests + ground truth validation) is non-negotiable for ML systems.
+4. **Dense + sparse retrieval is essential:** BM25 keyword matching proved critical for thematic queries. MiniLM embeddings excel at semantic similarity but miss exact keyword matches. Hybrid fusion (dense + sparse) improved both variants significantly: Variant B from 53.8% → 61.5%, Variant C from 46.2% → 53.8%. The Parasite example (#360 → #1 for "dark social commentary") demonstrates why production RAG systems should always combine both retrieval modes.
+
+5. **Evaluation exposed assumptions:** Initial test suite had 5/6 wrong ground truth IDs — only caught during deep investigation. Comprehensive testing (unit tests + integration tests + ground truth validation) is non-negotiable for ML systems.
 
 ### 5.5 Future Work
 
 - **Better embeddings:** Evaluate multimodal models (BLIP-2, ImageBind) that jointly encode visual and semantic mood
-- **Hybrid search:** Add BM25 sparse retrieval for keyword-heavy queries (multi-hop)
-- **Expanded KB:** Enrich remaining 514 films (currently only 17 priority films enriched)
+- **Query expansion for CLIP:** Implement learned mappings from abstract mood descriptors to concrete visual features (e.g., "cold atmosphere" → "blue, grey, foggy, wet")
+- **Expanded KB:** Enrich remaining 514 films (currently only 17 priority films enriched with keywords and reviews)
 - **Human evaluation:** Automated metrics (Recall@5) miss nuance — qualitative user studies needed
+- **Ablation 2 completion:** Test no-memory vs static-memory vs dynamic-memory variants on conversational queries
 - **Conversational dataset:** Build 20+ multi-turn dialogues to properly evaluate memory
 
 ### 5.6 Conclusion
