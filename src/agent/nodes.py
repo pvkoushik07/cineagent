@@ -142,21 +142,28 @@ def _get_retrievers() -> tuple[TextRetriever, CLIPRetriever, HybridRetriever]:
 ROUTER_PROMPT = """You are a query classifier for a film recommendation agent.
 
 Classify the user query into exactly one of these types:
-- factual: asking for specific facts (director, year, cast, plot details)
-- visual: describing visual mood, aesthetic, atmosphere, colour palette, setting look
-- hybrid: needs both factual and visual information
-- multi_hop: requires combining multiple constraints or pieces of evidence
+
+1. factual: Single factual question (director, year, cast, plot)
+   Examples: "Who directed Mulholland Drive?", "Films by Christopher Nolan"
+
+2. visual: Visual mood/aesthetic description
+   Examples: "Cold desaturated atmosphere", "Neon-lit cyberpunk"
+
+3. multi_hop: Multiple independent constraints that must ALL be satisfied
+   Examples:
+   - "Dark social commentary, non-English, after 2010" (3 constraints: theme + language + year)
+   - "True crime, American setting, documentary-style" (3 constraints: genre + location + style)
+   - "Visually stunning, minimal dialogue, focus on nature" (3 constraints: visual + narrative + theme)
+
+4. hybrid: Combines factual + visual in a single query
+   Examples: "Christopher Nolan films with cold atmosphere"
 
 Query: {query}
 
-Respond with JSON only:
-{{"query_type": "<type>", "retrieval_strategy": "<text|clip|hybrid|hybrid>", "reasoning": "<one sentence>"}}
+IMPORTANT: If query has 2+ constraints from different categories (theme + language, genre + year, etc.) → multi_hop
 
-Rules:
-- visual queries → clip or hybrid strategy
-- factual queries → text strategy
-- multi_hop queries → hybrid strategy
-- when in doubt → hybrid"""
+Respond with JSON only:
+{{"query_type": "<type>", "reasoning": "<one sentence>"}}"""
 
 
 def query_router_node(state: AgentState) -> dict:
