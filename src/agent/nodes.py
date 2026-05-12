@@ -139,31 +139,24 @@ def _get_retrievers() -> tuple[TextRetriever, CLIPRetriever, HybridRetriever]:
 
 # ── Node 1: QueryRouter ───────────────────────────────────────────────────────
 
-ROUTER_PROMPT = """You are a query classifier for a film recommendation agent.
-
-Classify the user query into exactly one of these types:
-
-1. factual: Single factual question (director, year, cast, plot)
-   Examples: "Who directed Mulholland Drive?", "Films by Christopher Nolan"
-
-2. visual: Visual mood/aesthetic description
-   Examples: "Cold desaturated atmosphere", "Neon-lit cyberpunk"
-
-3. multi_hop: Multiple independent constraints that must ALL be satisfied
-   Examples:
-   - "Dark social commentary, non-English, after 2010" (3 constraints: theme + language + year)
-   - "True crime, American setting, documentary-style" (3 constraints: genre + location + style)
-   - "Visually stunning, minimal dialogue, focus on nature" (3 constraints: visual + narrative + theme)
-
-4. hybrid: Combines factual + visual in a single query
-   Examples: "Christopher Nolan films with cold atmosphere"
+ROUTER_PROMPT = """Classify this film query:
 
 Query: {query}
 
-IMPORTANT: If query has 2+ constraints from different categories (theme + language, genre + year, etc.) → multi_hop
+STEP 1: Count the commas or "and" keywords
+- If 2+ commas/ands separating distinct requirements → multi_hop
+- Examples that are multi_hop:
+  * "dark social commentary, non-English, after 2010" (2 commas = 3 requirements)
+  * "true crime, American, documentary-style" (2 commas = 3 requirements)
+  * "stunning visuals, minimal dialogue, nature focus" (2 commas = 3 requirements)
 
-Respond with JSON only:
-{{"query_type": "<type>", "reasoning": "<one sentence>"}}"""
+STEP 2: If not multi-constraint, classify as:
+- factual: One question about facts ("Who directed X?", "Films by Y")
+- visual: Describing visuals only ("cold atmosphere", "neon colors")
+- hybrid: One director/actor + visuals ("Nolan films with cold atmosphere")
+
+Respond JSON:
+{{"query_type": "<multi_hop|factual|visual|hybrid>", "reasoning": "found N constraints/requirements"}}"""
 
 
 def query_router_node(state: AgentState) -> dict:
@@ -198,6 +191,24 @@ Note: retrieval_strategy is always "text" (empirically best from ablation study)
 """
 
     try:
+        # RULE-BASED OVERRIDE: Check for comma-separated multi-constraints
+        # LLM struggles with this, so use simple heuristic
+        query_lower = query.lower()
+        comma_count = query.count(',')
+        and_count = query_lower.count(' and ')
+
+        # If 2+ commas or "and" keywords, likely multi-constraint query
+        is_multi_constraint = (comma_count >= 2) or (and_count >= 2) or (comma_count + and_count >= 2)
+
+        if is_multi_constraint:
+            logger.info(f"QueryRouter: OVERRIDE to multi_hop ({comma_count} commas, {and_count} ands)")
+            return {
+                "query_type": "multi_hop",
+                "retrieval_strategy": "hybrid",
+                "tool_calls_count": state["tool_calls_count"] + 1
+            }
+
+        # Otherwise, use LLM classification
         model = genai.GenerativeModel(GEMINI_MODEL)
         response = model.generate_content(prompt)
         result = parse_json_safe(response.text)
