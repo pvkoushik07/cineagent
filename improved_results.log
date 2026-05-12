@@ -1,456 +1,0 @@
-/Users/koushikpv07/Documents/cineagent/src/evaluation/run_eval.py:27: FutureWarning: 
-
-All support for the `google.generativeai` package has ended. It will no longer be receiving 
-updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
-See README for more details:
-
-https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
-
-  import google.generativeai as genai
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query asks for specific factual details: the director and release year of a film.
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]I0501 16:21:36.853601 17720039 ev_poll_posix.cc:593] FD from fork parent still in poll list: fd(7, generation: 1)
-Loading weights: 100%|██████████| 103/103 [00:00<00:00, 17457.20it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
-INFO:retrieval.text_retriever:TextRetriever initialised. Collection size: 2388
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/clip-ViT-B-32.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_bert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_albert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 6717.31it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Ftokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/chat_template.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/chat_template.jinja "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/audio_tokenizer_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Ftokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32 "HTTP/1.1 200 OK"
-INFO:retrieval.clip_retriever:CLIPRetriever initialised. Collection size: 1882
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9162.92it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
-INFO:retrieval.text_retriever:TextRetriever initialised. Collection size: 2388
-INFO:retrieval.caption_retriever:CaptionRetriever initialised (caption doc types only)
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 16605.04it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
-INFO:retrieval.text_retriever:TextRetriever initialised. Collection size: 2388
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/clip-ViT-B-32.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_bert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_albert_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 25747.01it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Ftokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/chat_template.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/chat_template.jinja "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/audio_tokenizer_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/preprocessor_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fpreprocessor_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/0_CLIPModel/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel%2Ftokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32 "HTTP/1.1 200 OK"
-INFO:retrieval.clip_retriever:CLIPRetriever initialised. Collection size: 1882
-INFO:sentence_transformers.base.model:No device provided, using mps
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:sentence_transformers.base.model:Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 13357.66it/s]
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
-INFO:retrieval.text_retriever:TextRetriever initialised. Collection size: 2388
-INFO:retrieval.caption_retriever:CaptionRetriever initialised (caption doc types only)
-INFO:retrieval.hybrid_retriever:HybridRetriever initialised with RRF fusion
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  5.69it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  5.69it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.20)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 1 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 51219ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.67s/it]Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.67s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query asks for specific factual information about a film's plot, which is a direct factual detail.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 18.52it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.00)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 1 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 8961ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:27<00:00, 27.79s/it]Evaluating: 100%|██████████| 1/1 [00:27<00:00, 27.79s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query asks for specific factual details about a film: its genre and cast.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 11.51it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.00)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 1 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 6882ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.78s/it]Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.78s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query asks for specific factual information (writer and director) about a particular film.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 12.42it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.60)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 1 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 18091ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.96s/it]Evaluating: 100%|██████████| 1/1 [00:07<00:00,  7.96s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query asks for a specific factual detail (runtime) about a movie.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 22.03it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.10)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 1 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 8277ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:13<00:00, 13.96s/it]Evaluating: 100%|██████████| 1/1 [00:13<00:00, 13.96s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'visual' - The query describes a visual mood and aesthetic using terms like 'cold', 'desaturated', 'rain-soaked', and 'urban visual atmosphere'.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 20.75it/s]
-INFO:agent.nodes:RetrievalPlanner: using Caption retriever for visual query
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.70)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 8637ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:22<00:00, 22.29s/it]Evaluating: 100%|██████████| 1/1 [00:22<00:00, 22.29s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'visual' - The query describes visual mood, color palette, and landscape characteristics without asking for specific facts or requiring multiple hops.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 10.96it/s]
-INFO:agent.nodes:RetrievalPlanner: using Caption retriever for visual query
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.50)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 8980ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:20<00:00, 20.91s/it]Evaluating: 100%|██████████| 1/1 [00:20<00:00, 20.91s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'visual' - The query describes a visual aesthetic and atmosphere using adjectives related to color, cleanliness, and institutional settings.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  5.16it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  5.16it/s]
-INFO:agent.nodes:RetrievalPlanner: using Caption retriever for visual query
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.70)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 11203ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:10<00:00, 10.77s/it]Evaluating: 100%|██████████| 1/1 [00:10<00:00, 10.77s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'visual' - The query describes a visual aesthetic, mood, and color palette of a scene rather than specific factual details about a film.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 35.42it/s]
-INFO:agent.nodes:RetrievalPlanner: using Caption retriever for visual query
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.60)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 9144ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:20<00:00, 20.42s/it]Evaluating: 100%|██████████| 1/1 [00:20<00:00, 20.42s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'visual' - The query describes the visual mood, aesthetic, and atmosphere of a film using terms like 'foggy,' 'grey,' 'bleak,' and 'overcast'.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 21.62it/s]
-INFO:agent.nodes:RetrievalPlanner: using Caption retriever for visual query
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.70)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 9164ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:09<00:00,  9.71s/it]Evaluating: 100%|██████████| 1/1 [00:09<00:00,  9.71s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'factual' - The query describes a film's thematic content ('dark social commentary'), language, and release year, all of which are factual or metadata attributes.
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 12.20it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.80)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 2 films
-WARNING:agent.nodes:Verifier: contradiction check failed - Both recommended films contradict the user's preferences. The user prefers 'non-English' films, but both 'Se7en' (English) and 'The Social Network' (English) are English-language films. The user also prefers films from 2011 or later, but 'Se7en' was released in 1995 and 'The Social Network' was released in 2010.
-INFO:agent.graph:Verifier failed: Both recommended films contradict the user's preferences. The user prefers 'non-English' films, but both 'Se7en' (English) and 'The Social Network' (English) are English-language films. The user also prefers films from 2011 or later, but 'Se7en' was released in 1995 and 'The Social Network' was released in 2010.. Retrying (1/2)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 22.29it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.80)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 2 films
-WARNING:agent.nodes:Verifier: contradiction check failed - Both recommended films contradict the user's preferences. 'Se7en' (1995) and 'The Social Network' (2010) are English-language films, which contradicts the user's preference for 'non-English' films. Furthermore, both films were released before 2011, contradicting the user's preferred 'year_range' (min: 2011).
-INFO:agent.graph:Turn complete: 3 tool calls, 41319ms, verified=False
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:18<00:00, 18.66s/it]Evaluating: 100%|██████████| 1/1 [00:18<00:00, 18.66s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'hybrid' - The query includes both factual constraints (true crime story, American setting) and visual/aesthetic descriptors (documentary-style realism).
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 13.02it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.80)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 11839ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:14<00:00, 14.68s/it]Evaluating: 100%|██████████| 1/1 [00:14<00:00, 14.68s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-INFO:agent.nodes:QueryRouter: classified as 'hybrid' - The query combines visual descriptors ('visually stunning') with factual attributes about the film's content and style ('minimal dialogue', 'focus on nature').
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 21.74it/s]
-INFO:agent.nodes:RetrievalPlanner: using Text retriever
-INFO:agent.nodes:RetrievalPlanner: retrieved 10 docs, 0 images
-INFO:agent.nodes:TasteProfileUpdater: updated profile (confidence=0.80)
-INFO:agent.nodes:AnswerSynthesiser: generated response, cited 0 films
-INFO:agent.nodes:Verifier: all checks passed
-INFO:agent.graph:Turn complete: 2 tool calls, 11325ms, verified=True
-Evaluating:   0%|          | 0/1 [00:00<?, ?it/s]INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-Evaluating: 100%|██████████| 1/1 [00:14<00:00, 14.91s/it]Evaluating: 100%|██████████| 1/1 [00:14<00:00, 14.91s/it]
-WARNING:evaluation.metrics:ragas faithfulness scoring failed: float() argument must be a string or a real number, not 'list'
-{
-  "factual": {
-    "n_queries": 5,
-    "recall_at_5": 0.8,
-    "faithfulness": 0.0,
-    "mean_latency_ms": 18686.3,
-    "mean_tool_calls": 2.0
-  },
-  "visual": {
-    "n_queries": 5,
-    "recall_at_5": 0.2,
-    "faithfulness": 0.0,
-    "mean_latency_ms": 9425.5,
-    "mean_tool_calls": 2.0
-  },
-  "multi_hop": {
-    "n_queries": 3,
-    "recall_at_5": 0.0,
-    "faithfulness": 0.0,
-    "mean_latency_ms": 21494.2,
-    "mean_tool_calls": 2.3
-  },
-  "overall": {
-    "n_queries": 13,
-    "recall_at_5": 0.385,
-    "faithfulness": -1,
-    "mean_latency_ms": 15772.4,
-    "mean_tool_calls": 2.1
-  }
-}

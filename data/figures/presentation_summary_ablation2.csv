@@ -1,4 +1,0 @@
-Strategy,Latency_ms,Tool_Calls,Confidence
-Dynamic Updater,32362.344999999998,2.5,0.8
-No Memory,32226.364999999998,2.5,0.8
-Static Memory,37806.84683355503,2.5,0.7

@@ -1,167 +1,0 @@
-INFO:__main__:Running two-stage retriever evaluation: exp_visual-extreme-clip
-INFO:sentence_transformers.SentenceTransformer:Use pytorch device_name: mps
-INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: all-MiniLM-L6-v2
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7158.35it/s]
-[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
-Key                     | Status     |  | 
-------------------------+------------+--+-
-embeddings.position_ids | UNEXPECTED |  | 
-
-[3mNotes:
-- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
-INFO:retrieval.text_retriever:TextRetriever initialised. Collection size: 2428
-INFO:sentence_transformers.SentenceTransformer:Use pytorch device_name: mps
-INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: clip-ViT-B-32
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/config_sentence_transformers.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/README.md "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/clip-ViT-B-32/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/modules.json "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/revision/main "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: HEAD https://huggingface.co/sentence-transformers/clip-ViT-B-32/resolve/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel/pytorch_model.bin "HTTP/1.1 302 Found"
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32/xet-read-token/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f "HTTP/1.1 200 OK"
-Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 8767.51it/s]
-[1mCLIPModel LOAD REPORT[0m from: /Users/koushikpv07/.cache/huggingface/hub/models--sentence-transformers--clip-ViT-B-32/snapshots/327ab6726d33c0e22f920c83f2ff9e4bd38ca37f/0_CLIPModel
-Key                                  | Status     |  | 
--------------------------------------+------------+--+-
-text_model.embeddings.position_ids   | UNEXPECTED |  | 
-vision_model.embeddings.position_ids | UNEXPECTED |  | 
-
-[3mNotes:
-- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
-The image processor of type `CLIPImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. 
-INFO:httpx:HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/clip-ViT-B-32 "HTTP/1.1 200 OK"
-INFO:retrieval.clip_retriever:CLIPRetriever initialised. Collection size: 1914
-INFO:retrieval.two_stage_retriever:TwoStageRetriever initialized: top_k=5, candidate_k=20
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  2.01it/s]Batches: 100%|██████████| 1/1 [00:00<00:00,  2.01it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 26.53it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 16 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F1_01 (factual): Recall=1.00, Latency=573.7ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 37.82it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 39.06it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 13 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F1_02 (factual): Recall=1.00, Latency=80.1ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 48.30it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 65.44it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 13 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F1_03 (factual): Recall=0.00, Latency=64.8ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 34.12it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 44.82it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 14 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F1_04 (factual): Recall=1.00, Latency=77.9ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 154.20it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 33.16it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 11 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F1_05 (factual): Recall=1.00, Latency=57.2ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 161.59it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 50 text candidates (k=50)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 37.39it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 43 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 50 candidates → 5 results (deduplicated)
-INFO:__main__:F2_01 (visual): Recall=0.00, Latency=105.5ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 37.40it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 50 text candidates (k=50)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 113.30it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 37 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 50 candidates → 5 results (deduplicated)
-INFO:__main__:F2_02 (visual): Recall=0.00, Latency=98.2ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 41.14it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 50 text candidates (k=50)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 42.23it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 41 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 50 candidates → 5 results (deduplicated)
-INFO:__main__:F2_03 (visual): Recall=0.00, Latency=116.8ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 132.55it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 50 text candidates (k=50)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 61.66it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 41 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 50 candidates → 5 results (deduplicated)
-INFO:__main__:F2_04 (visual): Recall=0.00, Latency=89.9ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 138.95it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 50 text candidates (k=50)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 49.49it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 33 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 50 candidates → 5 results (deduplicated)
-INFO:__main__:F2_05 (visual): Recall=1.00, Latency=79.0ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 40.48it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 41.71it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 12 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F3_01 (multi_hop): Recall=0.00, Latency=71.4ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 195.97it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 101.54it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 14 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F3_02 (multi_hop): Recall=0.00, Latency=39.6ms
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 134.97it/s]
-INFO:retrieval.two_stage_retriever:Stage 1: Retrieved 20 text candidates (k=20)
-Batches:   0%|          | 0/1 [00:00<?, ?it/s]Batches: 100%|██████████| 1/1 [00:00<00:00, 96.27it/s]
-INFO:retrieval.two_stage_retriever:Stage 2: Computed CLIP scores for 16 candidate films
-INFO:retrieval.two_stage_retriever:Two-stage retrieval: 20 candidates → 5 results (deduplicated)
-INFO:__main__:F3_03 (multi_hop): Recall=0.00, Latency=44.6ms
-INFO:__main__:Results saved to data/results/exp_visual-extreme-clip.json
-
-=== EVALUATION SUMMARY ===
-
-VISUAL:
-  Recall@5: 20.0%
-  N Queries: 5
-  Latency: 97.9ms
-
-MULTI_HOP:
-  Recall@5: 0.0%
-  N Queries: 3
-  Latency: 51.9ms
-
-FACTUAL:
-  Recall@5: 80.0%
-  N Queries: 5
-  Latency: 170.7ms
-
-OVERALL:
-  Recall@5: 38.5%
-  N Queries: 13
-  Latency: 115.3ms
