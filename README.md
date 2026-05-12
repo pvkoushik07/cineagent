@@ -22,6 +22,29 @@
 
 ---
 
+## 🎯 For Markers/Reviewers: Quick Test (2 minutes)
+
+**Already have the knowledge base?** Test the agent immediately:
+
+```bash
+# 1. Verify setup
+python verify_reproducibility.py
+
+# 2. Run demo with pre-written queries
+python demo.py --demo
+
+# 3. Or try your own questions interactively
+python demo.py
+```
+
+**Example queries to try:**
+- "I want a psychological thriller with a twist ending"
+- "Find me something visually stunning with minimal dialogue"
+- "Dark social commentary film, non-English, after 2010"
+- "Something like Parasite but set in America"
+
+---
+
 ## Quick Start (Reproduce Everything in 5 Steps)
 
 ### Prerequisites
@@ -40,19 +63,27 @@ cp .env.example .env
 # Edit .env and add your TMDB_API_KEY and GEMINI_API_KEY
 ```
 
-### 3. Build the knowledge base
+### 3. Verify setup
+```bash
+python verify_reproducibility.py
+```
+
+### 4. Build the knowledge base (if not provided)
 ```bash
 python src/pipeline/kb_builder.py
 # Takes ~20-30 minutes for 500 films (TMDB rate limit)
 # Saves to data/indices/
+# Note: Pre-built KB may be provided in submission ZIP
 ```
 
-### 4. Run the agent interactively
+### 5. Run the agent interactively
 ```bash
 python src/agent/graph.py
+# Or use the demo script:
+python demo.py --demo
 ```
 
-### 5. Reproduce evaluation results
+### 6. Reproduce evaluation results
 ```bash
 python src/evaluation/run_eval.py --all
 # Results saved to data/results/eval_results.json
