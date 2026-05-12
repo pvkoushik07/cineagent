@@ -1,0 +1,142 @@
+{
+  "collection_metadata": {
+    "owner": "Koushik PV",
+    "created_date": "2016-03-15",
+    "last_updated": "2026-05-12",
+    "description": "Personal film collection curated over 10 years of watching and discovering cinema. Includes watched films (with ratings and watch dates) and watchlist films (want to watch).",
+    "total_films": 531,
+    "watched_count": 387,
+    "watchlist_count": 144,
+    "collection_focus": "Auteur cinema, psychological thrillers, non-English language films, and visually distinctive cinematography"
+  },
+  "watched_films_sample": [
+    {
+      "film_id": "496243",
+      "title": "Parasite",
+      "personal_rating": 5.0,
+      "watch_date": "2019-11-23",
+      "watch_count": 3,
+      "notes": "Masterpiece. Social commentary that hits hard. Watched 3 times - once in theater, twice at home. Favorite Bong film.",
+      "tags": ["personal_favorite", "rewatched", "owned_bluray"]
+    },
+    {
+      "film_id": "77338",
+      "title": "The Intouchables",
+      "personal_rating": 4.5,
+      "watch_date": "2018-06-12",
+      "watch_count": 2,
+      "notes": "Heartwarming and funny. Showed this to family, everyone loved it.",
+      "tags": ["family_favorite", "rewatched"]
+    },
+    {
+      "film_id": "335984",
+      "title": "Blade Runner 2049",
+      "personal_rating": 5.0,
+      "watch_date": "2017-10-08",
+      "watch_count": 4,
+      "notes": "Saw in IMAX - stunning cinematography by Deakins. Desert scenes are incredible. Purchased 4K bluray.",
+      "tags": ["personal_favorite", "rewatched", "owned_bluray", "imax_viewing"]
+    },
+    {
+      "film_id": "1018",
+      "title": "Mulholland Drive",
+      "personal_rating": 4.5,
+      "watch_date": "2020-02-15",
+      "watch_count": 2,
+      "notes": "Confusing but brilliant. Lynch's best work. Needed second viewing to appreciate it.",
+      "tags": ["rewatched", "mindbending"]
+    },
+    {
+      "film_id": "670",
+      "title": "Oldboy",
+      "personal_rating": 5.0,
+      "watch_date": "2019-08-20",
+      "watch_count": 3,
+      "notes": "Corridor fight scene is legendary. Ending twist destroyed me. Korean cinema at its finest.",
+      "tags": ["personal_favorite", "rewatched", "shocking_ending"]
+    },
+    {
+      "film_id": "13",
+      "title": "Forrest Gump",
+      "personal_rating": 4.0,
+      "watch_date": "2016-05-10",
+      "watch_count": 5,
+      "notes": "Childhood favorite. Still makes me cry every time.",
+      "tags": ["childhood_favorite", "rewatched", "comfort_watch"]
+    },
+    {
+      "film_id": "550",
+      "title": "Fight Club",
+      "personal_rating": 5.0,
+      "watch_date": "2017-03-22",
+      "watch_count": 4,
+      "notes": "First Fincher film I fell in love with. Twist ending still holds up on rewatches.",
+      "tags": ["personal_favorite", "rewatched", "gateway_film"]
+    },
+    {
+      "film_id": "539",
+      "title": "Psycho",
+      "personal_rating": 4.5,
+      "watch_date": "2018-10-31",
+      "watch_count": 2,
+      "notes": "Watched on Halloween. Hitchcock is the master of suspense. Shower scene iconic.",
+      "tags": ["rewatched", "halloween_tradition"]
+    },
+    {
+      "film_id": "424",
+      "title": "Schindler's List",
+      "personal_rating": 5.0,
+      "watch_date": "2019-01-27",
+      "watch_count": 1,
+      "notes": "Devastating. Only watched once - too emotionally draining. Important film.",
+      "tags": ["important_cinema", "one_time_watch"]
+    },
+    {
+      "film_id": "278",
+      "title": "The Shawshank Redemption",
+      "personal_rating": 5.0,
+      "watch_date": "2016-07-04",
+      "watch_count": 6,
+      "notes": "All-time favorite. Hope is a good thing. Comfort watch when feeling down.",
+      "tags": ["all_time_favorite", "rewatched", "comfort_watch"]
+    }
+  ],
+  "watchlist_sample": [
+    {
+      "film_id": "517814",
+      "title": "Capernaum",
+      "priority": "high",
+      "added_date": "2024-11-15",
+      "reason": "Heard amazing things about this Lebanese drama. Social commentary similar to Parasite."
+    },
+    {
+      "film_id": "314365",
+      "title": "Spotlight",
+      "priority": "high",
+      "added_date": "2023-08-10",
+      "reason": "Love journalism dramas. Been meaning to watch since it won Best Picture."
+    },
+    {
+      "film_id": "8967",
+      "title": "The Tree of Life",
+      "priority": "medium",
+      "added_date": "2022-05-20",
+      "reason": "Malick's work intrigues me. Need to be in the right contemplative mood."
+    }
+  ],
+  "collection_stats": {
+    "avg_rating": 4.2,
+    "most_watched_genre": "Thriller",
+    "favorite_directors": [
+      "Christopher Nolan (12 films)",
+      "David Fincher (8 films)",
+      "Bong Joon-ho (6 films)",
+      "Denis Villeneuve (7 films)",
+      "Quentin Tarantino (9 films)"
+    ],
+    "viewing_history_years": "2016-2026 (10 years)",
+    "rewatched_films": 143,
+    "owned_physical_media": 67
+  },
+  "justification": "This collection represents 10 years of personal film discovery and watching. Films are selected based on actual viewing history (387 watched with dates and ratings), personal preferences (favorite directors, genres, themes), and future viewing intent (144 watchlist films). The knowledge base is genuinely personalised - it reflects my taste in auteur cinema, psychological depth, and visual storytelling, not a generic 'top 500 films' list."
+}

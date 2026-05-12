@@ -1,35 +1,44 @@
-# Data pipeline
-requests>=2.31.0
-python-dotenv>=1.0.0
-Pillow>=10.3.0
-tqdm>=4.66.2
- 
-# Embeddings (CPU-only, no GPU needed)
-sentence-transformers>=3.0.0
- 
-# Vector database
-chromadb>=0.5.0
- 
-# LLM and agent framework
-langchain>=0.2.16
-langchain-google-genai>=1.0.10
-langgraph>=0.2.28
-google-generativeai>=0.7.2
- 
+# Core dependencies for CineAgent
+# Python 3.11+
+
+# LLM & Agent Framework
+google-generativeai==0.8.3
+langgraph==0.1.19
+langchain==0.2.16
+langchain-core==0.2.38
+langchain-community==0.2.16
+
+# Vector Database & Embeddings
+chromadb==0.5.3
+sentence-transformers==3.0.1
+
+# Image Processing (for CLIP)
+Pillow==10.4.0
+torch==2.3.1
+torchvision==0.18.1
+
+# Data Pipeline
+requests==2.32.3
+python-dotenv==1.0.1
+tqdm==4.66.4
+
 # Evaluation
-ragas>=0.1.20
-pandas>=2.2.0
-seaborn>=0.13.0
-matplotlib>=3.9.0
- 
-# Notebooks
-jupyter>=1.0.0
-ipykernel>=6.29.0
-ipywidgets>=8.1.0
- 
-# Testing
-pytest>=8.3.0
-pytest-asyncio>=0.23.0
- 
+ragas==0.1.19
+datasets==2.20.0
+
 # Utilities
-pydantic>=2.8.0
+numpy==1.26.4
+pandas==2.2.2
+
+# Visualization (for notebooks)
+matplotlib==3.9.0
+seaborn==0.13.2
+jupyter==1.0.0
+notebook==7.2.1
+
+# Testing
+pytest==8.2.2
+pytest-cov==5.0.0
+
+# Optional: Local LLM fallback
+# ollama==0.3.0
